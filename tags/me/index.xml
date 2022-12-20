@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Me - 标签 - xxxl&#39;s Blog</title>
+        <link>https://example.com/tags/me/</link>
+        <description>Me - 标签 - xxxl&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>1797966009@qq.com (xxxl)</managingEditor>
+            <webMaster>1797966009@qq.com (xxxl)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 07 Aug 2022 13:39:06 &#43;0800</lastBuildDate><atom:link href="https://example.com/tags/me/" rel="self" type="application/rss+xml" /><item>
+    <title>第一篇文章</title>
+    <link>https://example.com/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</link>
+    <pubDate>Sun, 07 Aug 2022 13:39:06 &#43;0800</pubDate>
+    <author>xxxl</author>
+    <guid>https://example.com/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</guid>
+    <description><![CDATA[你好，这里是 4ever-xxxl。]]></description>
+</item>
+</channel>
+</rss>

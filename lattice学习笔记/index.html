@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Lattice学习笔记 - xxxl&#39;s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:title" content="Lattice学习笔记" />
+<meta property="og:description" content="咕咕咕，本358团第一鸽子🕊️决定不能再鸽了。 不过作为一个 WEB 手，第一篇博客居然写给了 Crypto，这是不是一种广义 NTR？ Lattice 是什么？ 格的定义" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.com/lattice%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" /><meta property="og:image" content="https://example.com/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-08-18T14:17:25+08:00" />
+<meta property="article:modified_time" content="2022-12-20T14:17:25+08:00" /><meta property="og:site_name" content="LoveIt" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://example.com/logo.png"/>
+
+<meta name="twitter:title" content="Lattice学习笔记"/>
+<meta name="twitter:description" content="咕咕咕，本358团第一鸽子🕊️决定不能再鸽了。 不过作为一个 WEB 手，第一篇博客居然写给了 Crypto，这是不是一种广义 NTR？ Lattice 是什么？ 格的定义"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/img/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://example.com/lattice%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" /><link rel="prev" href="https://example.com/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" /><link rel="next" href="https://example.com/cnss%E5%A4%8F%E4%BB%A4%E8%90%A5_web_writeup/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Lattice学习笔记",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/example.com\/lattice%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/"
+        },"image": ["https:\/\/example.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "CTF, Crypto, Lattice","wordcount":  1608 ,
+        "url": "https:\/\/example.com\/lattice%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0\/","datePublished": "2022-08-18T14:17:25+08:00","dateModified": "2022-12-20T14:17:25+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "https:\/\/example.com\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "xxxl"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="xxxl&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/img/favicon.png"
+        data-srcset="/img/favicon.png, /img/favicon.png 1.5x, /img/favicon.png 2x"
+        data-sizes="auto"
+        alt="/img/favicon.png"
+        title="/img/favicon.png" />xxl</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/categories/documentation/"> 文档 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="xxxl&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/img/favicon.png"
+        data-srcset="/img/favicon.png, /img/favicon.png 1.5x, /img/favicon.png 2x"
+        data-sizes="auto"
+        alt="/img/favicon.png"
+        title="/img/favicon.png" />xxl</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/categories/documentation/" title="">文档</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Lattice学习笔记</h1><h2 class="single-subtitle">众所周知，线代就不是人学的</h2><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://4ever-xxxl.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>xxxl</a>
+</span>&nbsp;<span class="post-category">收录于 <a href="/categories/ctf/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>CTF</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-08-18">2022-08-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1608 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="/lattice%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="leancloud_visitors" data-flag-title="Lattice学习笔记">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#lattice-是什么">Lattice 是什么？</a>
+      <ul>
+        <li><a href="#定义一离散子群"><strong>定义一</strong>：离散子群</a></li>
+        <li><a href="#定义二基的整系数组合"><strong>定义二</strong>：基的整系数组合</a></li>
+      </ul>
+    </li>
+    <li><a href="#lattice-基本概念">Lattice 基本概念</a>
+      <ul>
+        <li><a href="#行列式determinant">行列式（Determinant）</a></li>
+        <li><a href="#对偶格dual-lattice">对偶格（Dual lattice）</a></li>
+        <li><a href="#最短距离minimum-distance">最短距离（Minimum distance）</a></li>
+        <li><a href="#逐次最小长度successive-minima">逐次最小长度（Successive minima）</a></li>
+        <li><a href="#覆盖半径covering-radius">覆盖半径（Covering radius）</a></li>
+      </ul>
+    </li>
+    <li><a href="#lattice-计算问题">Lattice 计算问题</a>
+      <ul>
+        <li><a href="#最短向量问题shortest-vector-problem-svp">最短向量问题(Shortest Vector Problem, SVP)</a></li>
+        <li><a href="#最近向量问题closest-vector-problem-cvp">最近向量问题(Closest Vector Problem, CVP)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><blockquote>
+<p>咕咕咕，本358团第一鸽子🕊️决定不能再鸽了。
+不过作为一个 WEB 手，第一篇博客居然写给了 Crypto，这是不是一种广义 NTR？</p>
+</blockquote>
+<h2 id="lattice-是什么">Lattice 是什么？</h2>
+<p>格的定义有很多种，这里我只记了以大一的线代为基础所能理解的两种（<del>其他的啥玩意儿啊全是字儿</del></p>
+<h3 id="定义一离散子群"><strong>定义一</strong>：离散子群</h3>
+<p>$$
+格是R^n上的一个离散子群
+$$</p>
+<p>众所周知，笔者作为一只非数学系的菜狗是不会群环域的，所以只能简要写一下什么是群（<del>对着百度抄就完事了</del></p>
+<p>设 $G$ 为一个非空集合，$+$ 是它定义的一个二元运算，如果满足以下条件：</p>
+<ul>
+<li>
+<p>封闭性：若 $a,b\in G$，则存在唯一确定的 $c\in G$，使得 $a+b=c$；</p>
+</li>
+<li>
+<p>结合律：$\forall a,b,c \in G，$满足 $\left ( a+b \right ) +c=a+\left ( b+c \right )$；</p>
+</li>
+<li>
+<p>存在单位元：$\exists e\in G，\forall a \in G，a+e=e+a=a$；</p>
+</li>
+<li>
+<p>存在逆元：$\forall a \in G，\exists b \in G，a+b=b+a=e$；</p>
+</li>
+</ul>
+<p>则称 $G$ 对 $+$ 构成一个群</p>
+<p>其中，若 $\forall a,b \in G,a+b=b+a$，则称 $G$ 是一个阿贝尔群</p>
+<p>那么格就是欧氏空间内点的一种规则排列，其中最简单的格就是就是 $n$ 维空间内的 $\mathbb Z^n$。例如，最简单的二维格就是平面内所有的整数点的集合</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="./img/1.jpeg"
+        data-srcset="./img/1.jpeg, ./img/1.jpeg 1.5x, ./img/1.jpeg 2x"
+        data-sizes="auto"
+        alt="./img/1.jpeg"
+        title="1.1" /></p>
+<h3 id="定义二基的整系数组合"><strong>定义二</strong>：基的整系数组合</h3>
+<p>$$
+格是m维欧氏空间R^m的n(m\ge n)个线性无关向量组b_{1},b_{2},&hellip;,b_{n}的所有整系数线性组合，即\\
+\mathcal L(B)=\left { \sum_{i=1}^{n}x_{i}b_{i}:x_{i}\in \mathbb{Z} ,i=1,2,&hellip;,n    \right }
+$$
+这一种定义可能更易于我们将其和线性代数联系，其中向量组 $b_{1},b_{2},&hellip;,b_{n}$ 称为格的一组基，同一个格可以用不同的基表示</p>
+<p>不同的基可以通过线性变换相互转化，这里其实和线代里的子空间的概念很像。同样，对于一组基我们也可以通过施密特正交化、归一化这些方法来使得基成为我们想要的形式</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="./img/2.jpeg"
+        data-srcset="./img/2.jpeg, ./img/2.jpeg 1.5x, ./img/2.jpeg 2x"
+        data-sizes="auto"
+        alt="./img/2.jpeg"
+        title="1.2" /></p>
+<p>$m$ 称为格的维数，$n$ 称为格的秩，这里和大一学过的线代一样，满足 $m=n$ 的格称为满秩的，一般情况下我们只讨论满秩的格</p>
+<p>那么说了那么多，格究竟是什么呢？我们已经知道子空间是一堆线性无关向量张成的空间，那么我们可以把格理解为子空间下的一群有序的离散点集</p>
+<h2 id="lattice-基本概念">Lattice 基本概念</h2>
+<h3 id="行列式determinant">行列式（Determinant）</h3>
+<p>首先我们知道，行列式可以看做是有向面积或体积的概念在一般的欧几里得空间中的推广。那么在格中，行列式 $\det(\mathcal L)$ 的值定义为格的基 $\mathcal P(B)=\left { \sum_{i=1}^{n}x_{i}b_{i},0\le x_{i} &lt; 1 \right}$ 的体积</p>
+<p>即
+$$
+\det(\mathcal L)=vol(\mathcal P(B))=\sqrt{B^{T}B}
+$$
+线性变换不会改变行列式的值。那么显而易见地，对于同一个格的不同基，行列式也是始终不变的。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="./img/3.jpeg"
+        data-srcset="./img/3.jpeg, ./img/3.jpeg 1.5x, ./img/3.jpeg 2x"
+        data-sizes="auto"
+        alt="./img/3.jpeg"
+        title="2.1" /></p>
+<h3 id="对偶格dual-lattice">对偶格（Dual lattice）</h3>
+<p>对偶格与原格在同一个线性空间 $R^{m}$ 中，定义
+$$
+\mathcal L^{*}=\left { x\in R^{m},\forall v \in \mathcal L,\left \langle x,y \right \rangle \in \mathbb Z \right }
+$$</p>
+<h3 id="最短距离minimum-distance">最短距离（Minimum distance）</h3>
+<p>对于格 $\mathcal L$，最短距离 $\lambda_{1}$ 是任意两个格点距离的最小值：
+$$
+\lambda (\mathcal L)=inf\left { \left | x-y \right | :x,y \in \mathcal L,x \ne y  \right }
+$$
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="./img/4.jpeg"
+        data-srcset="./img/4.jpeg, ./img/4.jpeg 1.5x, ./img/4.jpeg 2x"
+        data-sizes="auto"
+        alt="./img/4.jpeg"
+        title="2.3.1" /></p>
+<p>当我们把原点作为格中一个点时：
+$$
+\lambda (\mathcal L)=inf\left { \left | x \right | :x \in \mathcal L\setminus \left { 0 \right }  \right }
+$$</p>
+<h3 id="逐次最小长度successive-minima">逐次最小长度（Successive minima）</h3>
+<p>接上，那么同理，我们用 $\lambda_{i}$ 表示第$i$短的距离</p>
+<p>显然有：
+$$
+\lambda_{1}\le \lambda_{2}\le \lambda_{3}\le &hellip;\le \lambda_{n}
+$$
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="./img/5.jpeg"
+        data-srcset="./img/5.jpeg, ./img/5.jpeg 1.5x, ./img/5.jpeg 2x"
+        data-sizes="auto"
+        alt="./img/5.jpeg"
+        title="2.4.1" /></p>
+<h3 id="覆盖半径covering-radius">覆盖半径（Covering radius）</h3>
+<p>对 $n$ 维格, 以格点为球心，$r$ 半径做 $n$ 维球, 能覆盖整个空间的最小 $r$ 称作覆盖半径。</p>
+<p>严格地说，若我们定义空间中点到格的距离（Distance function）：
+$$
+\mu (t,\mathcal L)=\min \limits_{x \in \mathcal L}\left | t-x \right |
+$$
+那么覆盖半径（Covering radius）：
+$$
+\mu (\mathcal L)=\max \limits _{t \in span(\mathcal L)}\mu(t,\mathcal L)
+$$</p>
+<h2 id="lattice-计算问题">Lattice 计算问题</h2>
+<h3 id="最短向量问题shortest-vector-problem-svp">最短向量问题(Shortest Vector Problem, SVP)</h3>
+<p>给定格 $\mathcal L$，找一个非零格向量 $v$，满足：
+$$
+\forall u \in \mathcal L\setminus \left { 0 \right } ,\left | v \right | \le \left | u \right |
+$$
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="./img/6.jpeg"
+        data-srcset="./img/6.jpeg, ./img/6.jpeg 1.5x, ./img/6.jpeg 2x"
+        data-sizes="auto"
+        alt="./img/6.jpeg"
+        title="3.1.1" /></p>
+<p>当给定基的性质比较差时，这个问题是相当难求的。于是我们退而求其次，有了简化版本的$SVP_{\gamma}$：
+$$
+\forall u \in \mathcal L\setminus \left { 0 \right } ,\left | v \right | \le \gamma\left | u \right |
+$$
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="./img/7.jpeg"
+        data-srcset="./img/7.jpeg, ./img/7.jpeg 1.5x, ./img/7.jpeg 2x"
+        data-sizes="auto"
+        alt="./img/7.jpeg"
+        title="3.1.2" /></p>
+<h3 id="最近向量问题closest-vector-problem-cvp">最近向量问题(Closest Vector Problem, CVP)</h3>
+<p>给定格 $\mathcal L$ 和目标向量 $t \in R^{m}$，找一个非零格向量 $v$，满足：
+$$
+\forall u \in \mathcal L\setminus \left { 0 \right } ,\left | v-t \right | \le \left | u-t \right |
+$$
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="./img/8.jpeg"
+        data-srcset="./img/8.jpeg, ./img/8.jpeg 1.5x, ./img/8.jpeg 2x"
+        data-sizes="auto"
+        alt="./img/8.jpeg"
+        title="4.1.1" /></p>
+<p>同样，$CVP$ 也有它的简化版本 $CVP_{\gamma}$：
+$$
+\forall u \in \mathcal L\setminus \left { 0 \right } ,\left | v-t \right | \le \gamma \left | u-t \right |
+$$
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="./img/9.jpeg"
+        data-srcset="./img/9.jpeg, ./img/9.jpeg 1.5x, ./img/9.jpeg 2x"
+        data-sizes="auto"
+        alt="./img/9.jpeg"
+        title="4.1.2" /></p>
+<p>$SVP,CVP$ 都已经被证明是 $NP-Hard$ 问题，硬上是肯定不行了，那么我们就需要一些近似算法</p>
+<blockquote>
+<p>Waiting for update</p>
+</blockquote>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-12-20</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/lattice%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://example.com/lattice%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-title="Lattice学习笔记" data-hashtags="CTF,Crypto,Lattice"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://example.com/lattice%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-hashtag="CTF"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://example.com/lattice%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-title="Lattice学习笔记"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://example.com/lattice%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-title="Lattice学习笔记"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@6.20.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://example.com/lattice%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-title="Lattice学习笔记"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/ctf/">CTF</a>,&nbsp;<a href="/tags/crypto/">Crypto</a>,&nbsp;<a href="/tags/lattice/">Lattice</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" class="prev" rel="prev" title="第一篇文章"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>第一篇文章</a>
+            <a href="/cnss%E5%A4%8F%E4%BB%A4%E8%90%A5_web_writeup/" class="next" rel="next" title="CNSS夏令营_WEB_Writeup">CNSS夏令营_WEB_Writeup<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.108.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://4ever-xxxl.github.io" target="_blank">xxxl</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/copy-tex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.18/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.1/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
