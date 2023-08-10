@@ -1,0 +1,42 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>xxxl&#39;s Blog</title>
+        <link>https://4ever-xxxl.github.io/</link>
+        <description>Hugo theme - LoveIt</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>m1ca@cnss.io (m1ca)</managingEditor>
+            <webMaster>m1ca@cnss.io (m1ca)</webMaster><lastBuildDate>Tue, 20 Dec 2022 10:46:44 &#43;0800</lastBuildDate>
+            <atom:link href="https://4ever-xxxl.github.io/index.xml" rel="self" type="application/rss+xml" />
+        <item>
+    <title>RankVote_重要节点组挖掘</title>
+    <link>https://4ever-xxxl.github.io/rankvote_%E9%87%8D%E8%A6%81%E8%8A%82%E7%82%B9%E7%BB%84%E6%8C%96%E6%8E%98/</link>
+    <pubDate>Tue, 20 Dec 2022 10:46:44 &#43;0800</pubDate>
+    <author>m1ca</author>
+    <guid>https://4ever-xxxl.github.io/rankvote_%E9%87%8D%E8%A6%81%E8%8A%82%E7%82%B9%E7%BB%84%E6%8C%96%E6%8E%98/</guid>
+    <description><![CDATA[摘要：记录一下这学期数据结构做的一个项目]]></description>
+</item>
+<item>
+    <title>四川省网安技能大赛2022-复现学习</title>
+    <link>https://4ever-xxxl.github.io/%E5%9B%9B%E5%B7%9D%E7%9C%81%E7%BD%91%E5%AE%89%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B2022-%E5%A4%8D%E7%8E%B0%E5%AD%A6%E4%B9%A0/</link>
+    <pubDate>Sun, 06 Nov 2022 10:46:44 &#43;0800</pubDate>
+    <author>m1ca</author>
+    <guid>https://4ever-xxxl.github.io/%E5%9B%9B%E5%B7%9D%E7%9C%81%E7%BD%91%E5%AE%89%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B2022-%E5%A4%8D%E7%8E%B0%E5%AD%A6%E4%B9%A0/</guid>
+    <description><![CDATA[摘要：四川网安省赛2022]]></description>
+</item>
+<item>
+    <title>CNSS2022夏令营_WEB_Writeup</title>
+    <link>https://4ever-xxxl.github.io/cnss%E5%A4%8F%E4%BB%A4%E8%90%A5_web_writeup/</link>
+    <pubDate>Sun, 28 Aug 2022 10:46:44 &#43;0800</pubDate>
+    <author>m1ca</author>
+    <guid>https://4ever-xxxl.github.io/cnss%E5%A4%8F%E4%BB%A4%E8%90%A5_web_writeup/</guid>
+    <description><![CDATA[摘要：多来点新生大跌斯哈斯哈🤤]]></description>
+</item>
+<item>
+    <title>第一篇文章</title>
+    <link>https://4ever-xxxl.github.io/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</link>
+    <pubDate>Sun, 07 Aug 2022 10:46:44 &#43;0800</pubDate>
+    <author>m1ca</author>
+    <guid>https://4ever-xxxl.github.io/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</guid>
+    <description><![CDATA[你好，这里是 4ever-xxxl。]]></description>
+</item>
+</channel>
+</rss>

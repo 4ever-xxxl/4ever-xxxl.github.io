@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Project - 标签 - xxxl&#39;s Blog</title>
+        <link>https://4ever-xxxl.github.io/tags/project/</link>
+        <description>Project - 标签 - xxxl&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>m1ca@cnss.io (m1ca)</managingEditor>
+            <webMaster>m1ca@cnss.io (m1ca)</webMaster><lastBuildDate>Tue, 20 Dec 2022 10:46:44 &#43;0800</lastBuildDate><atom:link href="https://4ever-xxxl.github.io/tags/project/" rel="self" type="application/rss+xml" /><item>
+    <title>RankVote_重要节点组挖掘</title>
+    <link>https://4ever-xxxl.github.io/rankvote_%E9%87%8D%E8%A6%81%E8%8A%82%E7%82%B9%E7%BB%84%E6%8C%96%E6%8E%98/</link>
+    <pubDate>Tue, 20 Dec 2022 10:46:44 &#43;0800</pubDate>
+    <author>m1ca</author>
+    <guid>https://4ever-xxxl.github.io/rankvote_%E9%87%8D%E8%A6%81%E8%8A%82%E7%82%B9%E7%BB%84%E6%8C%96%E6%8E%98/</guid>
+    <description><![CDATA[摘要：记录一下这学期数据结构做的一个项目]]></description>
+</item>
+</channel>
+</rss>
