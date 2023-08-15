@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>CS144_Lab 笔记 (updating) - xxxl&#39;s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:title" content="CS144_Lab 笔记 (updating)" />
+<meta property="og:description" content="很早就听闻 CS144 Lab 的大名, 但是由于各种原因一直没有上手实践. 直到最近才开始着手实践, 本文将记录我在实践过程中的一些笔记." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://4ever-xxxl.github.io/cs144_computer_network/" /><meta property="og:image" content="https://4ever-xxxl.github.io/47"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-08-15T19:57:53+08:00" />
+<meta property="article:modified_time" content="2023-08-15T19:57:53+08:00" /><meta property="og:site_name" content="xxxl&#39;s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://4ever-xxxl.github.io/47"/>
+
+<meta name="twitter:title" content="CS144_Lab 笔记 (updating)"/>
+<meta name="twitter:description" content="很早就听闻 CS144 Lab 的大名, 但是由于各种原因一直没有上手实践. 直到最近才开始着手实践, 本文将记录我在实践过程中的一些笔记."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/image/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://4ever-xxxl.github.io/cs144_computer_network/" /><link rel="prev" href="https://4ever-xxxl.github.io/rankvote_%E9%87%8D%E8%A6%81%E8%8A%82%E7%82%B9%E7%BB%84%E6%8C%96%E6%8E%98/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "CS144_Lab 笔记 (updating)",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/4ever-xxxl.github.io\/cs144_computer_network\/"
+        },"image": ["https:\/\/4ever-xxxl.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Project, CS144, Computer Network","wordcount":  431 ,
+        "url": "https:\/\/4ever-xxxl.github.io\/cs144_computer_network\/","datePublished": "2023-08-15T19:57:53+08:00","dateModified": "2023-08-15T19:57:53+08:00","publisher": {
+            "@type": "Organization",
+            "name": "m1ca","logo": "https:\/\/4ever-xxxl.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "m1ca"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="xxxl&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/image/favicon.png"
+        data-srcset="/image/favicon.png, /image/favicon.png 1.5x, /image/favicon.png 2x"
+        data-sizes="auto"
+        alt="/image/favicon.png"
+        title="/image/favicon.png" />xxl</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about/" title="About"> About </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="xxxl&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/image/favicon.png"
+        data-srcset="/image/favicon.png, /image/favicon.png 1.5x, /image/favicon.png 2x"
+        data-sizes="auto"
+        alt="/image/favicon.png"
+        title="/image/favicon.png" />xxl</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about/" title="About">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">CS144_Lab 笔记 (updating)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/4ever-xxxl" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>m1ca</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/project/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Project</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-15">2023-08-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 431 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#环境搭建">环境搭建</a></li>
+    <li><a href="#lab_0">Lab_0</a>
+      <ul>
+        <li><a href="#writing-webget">Writing webget</a></li>
+        <li><a href="#an-in-memory-reliable-byte-stream">An in-memory reliable byte stream</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>很早就听闻 CS144 Lab 的大名, 但是由于各种原因一直没有上手实践. 直到最近才开始着手实践, 本文将记录我在实践过程中的一些笔记.</p>
+<p>由于本次实验和博客是并行进行的, 所以已经编辑公开的部分也可能会出现部分差错以及可能导致的多次修改.</p>
+<p>我的仓库在 <a href="https://github.com/4ever-xxxl/CS144-Computer-Network" target="_blank" rel="noopener noreffer ">4ever-xxxl/CS144-Computer-Network</a> .</p>
+<h2 id="环境搭建">环境搭建</h2>
+<p>本次环境基于官方镜像 VirtualBox 搭建, 镜像文件以及搭建教程可以在 <a href="https://stanford.edu/class/cs144/vm_howto/vm-howto-image.html" target="_blank" rel="noopener noreffer ">这里</a> 找到. VirtualBox 启动后照常配置, 使用 Vscode 远程连接到虚拟机, Vscode 中配置插件 <code>C/C++</code> <code>GitLens</code>, 之后的实验都在 Vscode 中进行.</p>
+<p>运行 <a href="https://web.stanford.edu/class/cs144/vm_howto/setup_dev_env.sh" target="_blank" rel="noopener noreffer ">setup_dev_env.sh</a> 配置实验所需环境. 之后 git clone 仓库, 我使用的仓库是 <a href="https://github.com/PKUFlyingPig/CS144-Computer-Network" target="_blank" rel="noopener noreffer ">PKUFlyingPig/CS144-Computer-Network</a> , 再按照 README.md 配置即可.</p>
+<p>这里有个坑就是由于缺失了 &lt;array&gt; &lt;stdexcept&gt; 两个文件头导致执行 <code>make</code> 时会报错, 需要在对应文件手动补上. (我也不是很理解为什么三年前的高星仓库 clone 下来不能直接用.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="./img/error.png"
+        data-srcset="./img/error.png, ./img/error.png 1.5x, ./img/error.png 2x"
+        data-sizes="auto"
+        alt="./img/error.png"
+        title="error" /></p>
+<h2 id="lab_0">Lab_0</h2>
+<h3 id="writing-webget">Writing webget</h3>
+<p>编写 get_URL 函数简略实现应用层 HTTP 请求响应的功能, 即使用 socket 向指定 IP 和 Path 发送 GET 请求并获取响应.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Cpp" data-lang="Cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">get_URL</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">host</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">path</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">TCPSocket</span> <span class="n">sock</span><span class="p">{};</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sock</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">Address</span><span class="p">(</span><span class="n">host</span><span class="p">,</span><span class="s">&#34;http&#34;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sock</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#34;GET &#34;</span><span class="o">+</span><span class="n">path</span><span class="o">+</span><span class="s">&#34; HTTP/1.1</span><span class="se">\r\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sock</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#34;Host: &#34;</span><span class="o">+</span><span class="n">host</span><span class="o">+</span><span class="s">&#34;</span><span class="se">\r\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sock</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#34;Connection: close</span><span class="se">\r\n\r\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">sock</span><span class="p">.</span><span class="n">eof</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">sock</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sock</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里同样有个坑就是如果主机开了代理并且开了 TUN 模式, 那么 <code>sock.shutdown(SHUT_WR);</code> 会导致异常退出. 具体原因还不是很清楚.</p>
+<h3 id="an-in-memory-reliable-byte-stream">An in-memory reliable byte stream</h3>
+<p>waiting.</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-08-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/cs144_computer_network/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://4ever-xxxl.github.io/cs144_computer_network/" data-title="CS144_Lab 笔记 (updating)" data-hashtags="Project,CS144,Computer Network"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://4ever-xxxl.github.io/cs144_computer_network/" data-hashtag="Project"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://4ever-xxxl.github.io/cs144_computer_network/" data-title="CS144_Lab 笔记 (updating)"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://4ever-xxxl.github.io/cs144_computer_network/" data-title="CS144_Lab 笔记 (updating)"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://4ever-xxxl.github.io/cs144_computer_network/" data-title="CS144_Lab 笔记 (updating)"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/project/">Project</a>,&nbsp;<a href="/tags/cs144/">CS144</a>,&nbsp;<a href="/tags/computer-network/">Computer Network</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/rankvote_%E9%87%8D%E8%A6%81%E8%8A%82%E7%82%B9%E7%BB%84%E6%8C%96%E6%8E%98/" class="prev" rel="prev" title="RankVote_重要节点组挖掘"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>RankVote_重要节点组挖掘</a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.117.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/4ever-xxxl" target="_blank">m1ca</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOKFj8TM4CYhAR","darkTheme":"dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"light","mapping":"pathname","reactionsEnabled":"1","repo":"4ever-xxxl/4ever-xxxl.github.io","repoId":"R_kgDOKFj8TA"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

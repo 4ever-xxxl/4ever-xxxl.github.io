@@ -2,14 +2,17 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
+            <loc>https://4ever-xxxl.github.io/categories/</loc><lastmod>2023-08-15T19:57:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://4ever-xxxl.github.io/tags/computer-network/</loc><lastmod>2023-08-15T19:57:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://4ever-xxxl.github.io/tags/cs144/</loc><lastmod>2023-08-15T19:57:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://4ever-xxxl.github.io/cs144_computer_network/</loc><lastmod>2023-08-15T19:57:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://4ever-xxxl.github.io/posts/</loc><lastmod>2023-08-15T19:57:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://4ever-xxxl.github.io/tags/project/</loc><lastmod>2023-08-15T19:57:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://4ever-xxxl.github.io/categories/project/</loc><lastmod>2023-08-15T19:57:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://4ever-xxxl.github.io/tags/</loc><lastmod>2023-08-15T19:57:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://4ever-xxxl.github.io/</loc><lastmod>2023-08-15T19:57:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://4ever-xxxl.github.io/about/</loc><lastmod>2023-08-10T18:15:20&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://4ever-xxxl.github.io/categories/</loc><lastmod>2022-12-20T10:46:44&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://4ever-xxxl.github.io/posts/</loc><lastmod>2022-12-20T10:46:44&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://4ever-xxxl.github.io/tags/project/</loc><lastmod>2022-12-20T10:46:44&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://4ever-xxxl.github.io/categories/project/</loc><lastmod>2022-12-20T10:46:44&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://4ever-xxxl.github.io/rankvote_%E9%87%8D%E8%A6%81%E8%8A%82%E7%82%B9%E7%BB%84%E6%8C%96%E6%8E%98/</loc><lastmod>2022-12-20T10:46:44&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://4ever-xxxl.github.io/tags/</loc><lastmod>2022-12-20T10:46:44&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://4ever-xxxl.github.io/</loc><lastmod>2022-12-20T10:46:44&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://4ever-xxxl.github.io/tags/ctf/</loc><lastmod>2022-11-06T10:46:44&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://4ever-xxxl.github.io/categories/ctf/</loc><lastmod>2022-11-06T10:46:44&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://4ever-xxxl.github.io/tags/web/</loc><lastmod>2022-11-06T10:46:44&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
