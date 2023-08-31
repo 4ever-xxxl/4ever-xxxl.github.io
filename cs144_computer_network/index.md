@@ -109,4 +109,79 @@ size_t ByteStream::remaining_capacity() const { return _capacity - buffer_size()
 
 ## Lab_1
 
-wating.
+### stream_reassembler
+
+编写一个流重组器, 用于将乱序的数据流重组成有序的数据流. 
+
+这个 lab 的难点在于乱序数据流的合并以及数据流结尾的边界问题. 
+
+对于乱序数据流, 我采用 `<deque>` 来进行存储, 用 `_buffer` 存储数据, `_bitmap` 存储数据是否已经被写入. 当数据流到来时, 先根据前后边界进行裁剪. 前边界为第一个未按序的字节序号, 后边界由缓冲区大小限制. 然后顺序扫一遍, 将数据写入 `_buffer` 未存储的位置, 即 `_bitmap` 为 `false` 的位置, 并将其置真. 最后顺序检查 `_bitmap` , 将已经按序的头部数据弹出并写入 `_output` 中. 
+
+这里的实现并没有采用 `<set>` 等树型数据结构, 而是在双端队列中顺序存储. 虽然实现简单, 但是时间复杂度是 $O(n)$ 的, 理论上部分环节是可以达到 $O(\log n)$ 的, 留个坑等后面再改进吧. 
+
+然后是数据流结尾的边界问题, 只有当数据流结尾到来并且都能被写入时, 才能记录下 `_eof` 信号, 否则会导致数据流结尾的数据丢失. 这时结尾前可能仍然是乱序状态, 因此需要等待所有乱序数据排列完并写入后才能将 `_output` 关闭. 
+
+`check_lab1` 的运行时间在 0.75~0.85s 左右. 
+
+stream\_reassembler.hh
+```Cpp
+class StreamReassembler {
+  private:
+    // Your code here -- add private members as necessary.
+    std::deque<char> _buffer = {};
+    std::deque<bool> _bitmap = {};
+    size_t _first_unassembled_idx = 0;
+    size_t _unassembled_bytes_num = 0;
+    bool _eof = false;
+    ByteStream _output;  //!< The reassembled in-order byte stream
+    size_t _capacity;    //!< The maximum number of bytes
+// ...
+}
+```
+
+stream\_reassembler.cc
+```Cpp
+StreamReassembler::StreamReassembler(const size_t capacity)
+    : _buffer(capacity, '\0'), _bitmap(capacity, false), _output(capacity), _capacity(capacity) {}
+
+void StreamReassembler::push_substring(const string &data, const size_t index, const bool eof) {
+    if (eof && _first_unassembled_idx + _capacity - _output.buffer_size() >= index + data.length()) {
+        _eof = true;
+    }
+    size_t front_boundary = std::max(index, _first_unassembled_idx);
+    size_t back_boundary = std::min(index + data.length(), _first_unassembled_idx + _capacity - _output.buffer_size());
+    for (size_t i = front_boundary; i < back_boundary; i++) {
+        if (_bitmap[i - _first_unassembled_idx]) {
+            continue;
+        }
+        _buffer[i - _first_unassembled_idx] = data[i - index];
+        _bitmap[i - _first_unassembled_idx] = true;
+        _unassembled_bytes_num++;
+    }
+    std::string _str = "";
+    while (_bitmap.front()) {
+        _str += _buffer.front();
+        _buffer.pop_front();
+        _bitmap.pop_front();
+        _buffer.push_back('\0');
+        _bitmap.push_back(false);
+    }
+    _output.write(_str);
+    _first_unassembled_idx += _str.length();
+    _unassembled_bytes_num -= _str.length();
+    if (_eof && empty()) {
+        _output.end_input();
+    }
+}
+
+size_t StreamReassembler::unassembled_bytes() const { return _unassembled_bytes_num; }
+
+bool StreamReassembler::empty() const { return unassembled_bytes() == 0; }
+
+size_t StreamReassembler::ack_idx() const { return _first_unassembled_idx; }
+
+bool StreamReassembler::input_ended() const { return _eof && empty(); }
+```
+
+***
+> Wait for next lab...
