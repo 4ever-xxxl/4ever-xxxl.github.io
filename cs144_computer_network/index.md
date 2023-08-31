@@ -233,6 +233,83 @@ uint64_t unwrap(WrappingInt32 n, WrappingInt32 isn, uint64_t checkpoint) {
 
 ### tcp_receiver
 
+实现 TCP 接收端, 用于接收 TCP 数据包并将其重组成有序的数据流. 需要处理 `syn` `fin` 两种特殊数据包, 以及乱序数据包.
+
+首先, 为了便于对 `stream_reassembler` 的数据调用, 我们新建了两个接口, `ack_idx` 和 `input_ended` , 用于获取绝对 ack 序列号和判断是否结束.
+
+stream\_reassembler.hh
+```Cpp
+    //! The expected number of syn in the next segment
+    size_t ack_idx() const;
+
+    //! \brief Is the stream_reassembler ending?
+    //! \returns `true` if stream_reassembler has ended
+    bool input_ended() const;
+```
+
+stream\_reassembler.cc
+```Cpp
+size_t StreamReassembler::ack_idx() const { return _first_unassembled_idx; }
+
+bool StreamReassembler::input_ended() const { return _eof && empty(); }
+```
+
+接下来是 `tcp_receiver` 的实现, 首先是 `segment_received` 函数, 用于接收数据包并处理. 处理的逻辑如下:
+1. 如果在 `syn` 之前收到数据包, 则直接丢弃. 
+2. `_syn_flag` `_fin_flag` 或等于对应的标志位, 记录是否已经受到过对应的数据包. 
+3. 如果收到 `syn` 数据包, 则记录 `isn` 序列号, 并将 `syn` 数据包的序列号加一作为下一个期望的序列号. 
+4. 绝对序列号通过 `unwrap` 函数转化成序列号, 并调用 `stream_reassembler` 的 `push_substring` 函数进行处理. 这里的参数 `index` 是数据包内容的序列号, 所以需要减一. 
+
+然后是 `ackno` 函数的实现, 略有小坑, 需要判断是否收到过 `syn` 数据包. 如果收到过, 那么通过绝对序列号计算序列号返回即可; 如果没有收到过, 那么 `ackno` 应该返回 `std::nullopt` 而不是 0. ( 为啥不可以返回 0 啊喂 ).
+
+`window_size` 则较为简单, 直接返回 `stream_reassembler` 的剩余容量即可.
+
+`check_lab2` 的运行时间在 0.90~1.10s 左右.
+
+tcp\_receiver.hh
+```Cpp
+class TCPReceiver {
+    //! Our data structure for re-assembling bytes.
+    StreamReassembler _reassembler;
+    bool _syn_flag = false;
+    bool _fin_flag = false;
+    size_t _abs_seqno = 0;
+    WrappingInt32 _seqno{0};
+    WrappingInt32 _isn{0};
+    //! The maximum number of bytes we'll store.
+    size_t _capacity;
+    // ...
+}
+```
+
+tcp\_receiver.cc
+```Cpp
+void TCPReceiver::segment_received(const TCPSegment &seg) {
+    if (!seg.header().syn && !_syn_flag) {
+        return;
+    }
+    _syn_flag |= seg.header().syn;
+    _fin_flag |= seg.header().fin;
+    if (seg.header().syn) {
+        _isn = seg.header().seqno;
+    }
+    _seqno = seg.header().seqno + seg.header().syn;
+    _abs_seqno = unwrap(_seqno, _isn, _reassembler.ack_idx());
+    _reassembler.push_substring(seg.payload().copy(), _abs_seqno - 1, seg.header().fin);
+}
+
+optional<WrappingInt32> TCPReceiver::ackno() const {
+    size_t _abs_ackno = _reassembler.ack_idx() + _syn_flag + _reassembler.input_ended();
+    if (_abs_ackno > 0) {
+        return wrap(_abs_ackno, _isn);
+    } else {
+        return std::nullopt;
+    }
+}
+
+size_t TCPReceiver::window_size() const { return _capacity - _reassembler.stream_out().buffer_size(); }
+```
+
 
 ***
 > Wait for next lab...

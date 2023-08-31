@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/4ever-xxxl.github.io\/cs144_computer_network\/"
-        },"image": ["https:\/\/4ever-xxxl.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Project, CS144, Computer Network","wordcount":  1798 ,
+        },"image": ["https:\/\/4ever-xxxl.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Project, CS144, Computer Network","wordcount":  2400 ,
         "url": "https:\/\/4ever-xxxl.github.io\/cs144_computer_network\/","datePublished": "2023-08-15T19:57:53+08:00","dateModified": "2023-08-31T18:11:33+08:00","publisher": {
             "@type": "Organization",
             "name": "m1ca","logo": "https:\/\/4ever-xxxl.github.io\/images\/avatar.png"},"author": {
@@ -83,8 +83,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">CS144_Lab 笔记 (updating)</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/4ever-xxxl" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>m1ca</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/project/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Project</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-15">2023-08-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1798 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-15">2023-08-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2400 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -481,7 +481,137 @@ $$</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="tcp_receiver">tcp_receiver</h3>
-<hr>
+<p>实现 TCP 接收端, 用于接收 TCP 数据包并将其重组成有序的数据流. 需要处理 <code>syn</code> <code>fin</code> 两种特殊数据包, 以及乱序数据包.</p>
+<p>首先, 为了便于对 <code>stream_reassembler</code> 的数据调用, 我们新建了两个接口, <code>ack_idx</code> 和 <code>input_ended</code> , 用于获取绝对 ack 序列号和判断是否结束.</p>
+<p>stream_reassembler.hh</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Cpp" data-lang="Cpp"><span class="line"><span class="cl">    <span class="c1">//! The expected number of syn in the next segment
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">size_t</span> <span class="nf">ack_idx</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//! \brief Is the stream_reassembler ending?
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//! \returns `true` if stream_reassembler has ended
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">bool</span> <span class="nf">input_ended</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>stream_reassembler.cc</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Cpp" data-lang="Cpp"><span class="line"><span class="cl"><span class="n">size_t</span> <span class="n">StreamReassembler</span><span class="o">::</span><span class="n">ack_idx</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_first_unassembled_idx</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="n">StreamReassembler</span><span class="o">::</span><span class="n">input_ended</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_eof</span> <span class="o">&amp;&amp;</span> <span class="n">empty</span><span class="p">();</span> <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>接下来是 <code>tcp_receiver</code> 的实现, 首先是 <code>segment_received</code> 函数, 用于接收数据包并处理. 处理的逻辑如下:</p>
+<ol>
+<li>如果在 <code>syn</code> 之前收到数据包, 则直接丢弃.</li>
+<li><code>_syn_flag</code> <code>_fin_flag</code> 或等于对应的标志位, 记录是否已经受到过对应的数据包.</li>
+<li>如果收到 <code>syn</code> 数据包, 则记录 <code>isn</code> 序列号, 并将 <code>syn</code> 数据包的序列号加一作为下一个期望的序列号.</li>
+<li>绝对序列号通过 <code>unwrap</code> 函数转化成序列号, 并调用 <code>stream_reassembler</code> 的 <code>push_substring</code> 函数进行处理. 这里的参数 <code>index</code> 是数据包内容的序列号, 所以需要减一.</li>
+</ol>
+<p>然后是 <code>ackno</code> 函数的实现, 略有小坑, 需要判断是否收到过 <code>syn</code> 数据包. 如果收到过, 那么通过绝对序列号计算序列号返回即可; 如果没有收到过, 那么 <code>ackno</code> 应该返回 <code>std::nullopt</code> 而不是 0. ( 为啥不可以返回 0 啊喂 ).</p>
+<p><code>window_size</code> 则较为简单, 直接返回 <code>stream_reassembler</code> 的剩余容量即可.</p>
+<p><code>check_lab2</code> 的运行时间在 0.90~1.10s 左右.</p>
+<p>tcp_receiver.hh</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Cpp" data-lang="Cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TCPReceiver</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//! Our data structure for re-assembling bytes.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">StreamReassembler</span> <span class="n">_reassembler</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">bool</span> <span class="n">_syn_flag</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">bool</span> <span class="n">_fin_flag</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">size_t</span> <span class="n">_abs_seqno</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">WrappingInt32</span> <span class="n">_seqno</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="n">WrappingInt32</span> <span class="n">_isn</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//! The maximum number of bytes we&#39;ll store.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">size_t</span> <span class="n">_capacity</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>tcp_receiver.cc</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Cpp" data-lang="Cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">TCPReceiver</span><span class="o">::</span><span class="n">segment_received</span><span class="p">(</span><span class="k">const</span> <span class="n">TCPSegment</span> <span class="o">&amp;</span><span class="n">seg</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">seg</span><span class="p">.</span><span class="n">header</span><span class="p">().</span><span class="n">syn</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">_syn_flag</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">_syn_flag</span> <span class="o">|=</span> <span class="n">seg</span><span class="p">.</span><span class="n">header</span><span class="p">().</span><span class="n">syn</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">_fin_flag</span> <span class="o">|=</span> <span class="n">seg</span><span class="p">.</span><span class="n">header</span><span class="p">().</span><span class="n">fin</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">seg</span><span class="p">.</span><span class="n">header</span><span class="p">().</span><span class="n">syn</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">_isn</span> <span class="o">=</span> <span class="n">seg</span><span class="p">.</span><span class="n">header</span><span class="p">().</span><span class="n">seqno</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">_seqno</span> <span class="o">=</span> <span class="n">seg</span><span class="p">.</span><span class="n">header</span><span class="p">().</span><span class="n">seqno</span> <span class="o">+</span> <span class="n">seg</span><span class="p">.</span><span class="n">header</span><span class="p">().</span><span class="n">syn</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">_abs_seqno</span> <span class="o">=</span> <span class="n">unwrap</span><span class="p">(</span><span class="n">_seqno</span><span class="p">,</span> <span class="n">_isn</span><span class="p">,</span> <span class="n">_reassembler</span><span class="p">.</span><span class="n">ack_idx</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="n">_reassembler</span><span class="p">.</span><span class="n">push_substring</span><span class="p">(</span><span class="n">seg</span><span class="p">.</span><span class="n">payload</span><span class="p">().</span><span class="n">copy</span><span class="p">(),</span> <span class="n">_abs_seqno</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">seg</span><span class="p">.</span><span class="n">header</span><span class="p">().</span><span class="n">fin</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">optional</span><span class="o">&lt;</span><span class="n">WrappingInt32</span><span class="o">&gt;</span> <span class="n">TCPReceiver</span><span class="o">::</span><span class="n">ackno</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">size_t</span> <span class="n">_abs_ackno</span> <span class="o">=</span> <span class="n">_reassembler</span><span class="p">.</span><span class="n">ack_idx</span><span class="p">()</span> <span class="o">+</span> <span class="n">_syn_flag</span> <span class="o">+</span> <span class="n">_reassembler</span><span class="p">.</span><span class="n">input_ended</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">_abs_ackno</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nf">wrap</span><span class="p">(</span><span class="n">_abs_ackno</span><span class="p">,</span> <span class="n">_isn</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">nullopt</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">size_t</span> <span class="n">TCPReceiver</span><span class="o">::</span><span class="n">window_size</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_capacity</span> <span class="o">-</span> <span class="n">_reassembler</span><span class="p">.</span><span class="n">stream_out</span><span class="p">().</span><span class="n">buffer_size</span><span class="p">();</span> <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
 <blockquote>
 <p>Wait for next lab&hellip;</p>
 </blockquote></div><div class="post-footer" id="post-footer">
