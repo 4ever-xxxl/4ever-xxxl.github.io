@@ -115,9 +115,9 @@ size_t ByteStream::remaining_capacity() const { return _capacity - buffer_size()
 
 这个 lab 的难点在于乱序数据流的合并以及数据流结尾的边界问题. 
 
-对于乱序数据流, 我采用 `<deque>` 来进行存储, 用 `_buffer` 存储数据, `_bitmap` 存储数据是否已经被写入. 当数据流到来时, 先根据前后边界进行裁剪. 前边界为第一个未按序的字节序号, 后边界由缓冲区大小限制. 然后顺序扫一遍, 将数据写入 `_buffer` 未存储的位置, 即 `_bitmap` 为 `false` 的位置, 并将其置真. 最后顺序检查 `_bitmap` , 将已经按序的头部数据弹出并写入 `_output` 中. 
+对于乱序数据流, 我采用 deque 来进行存储, 用 `_buffer` 存储数据, `_bitmap` 存储数据是否已经被写入. 当数据流到来时, 先根据前后边界进行裁剪. 前边界为第一个未按序的字节序号, 后边界由缓冲区大小限制. 然后顺序扫一遍, 将数据写入 `_buffer` 未存储的位置, 即 `_bitmap` 为 `false` 的位置, 并将其置真. 最后顺序检查 `_bitmap` , 将已经按序的头部数据弹出并写入 `_output` 中. 
 
-这里的实现并没有采用 `<set>` 等树型数据结构, 而是在双端队列中顺序存储. 虽然实现简单, 但是时间复杂度是 $O(n)$ 的, 理论上部分环节是可以达到 $O(\log n)$ 的, 留个坑等后面再改进吧. 
+这里的实现并没有采用 set 等树型数据结构, 而是在双端队列中顺序存储. 虽然实现简单, 但是时间复杂度是 $O(n)$ 的, 理论上部分环节是可以达到 $O(\log n)$ 的, 留个坑等后面再改进吧. 
 
 然后是数据流结尾的边界问题, 只有当数据流结尾到来并且都能被写入时, 才能记录下 `_eof` 信号, 否则会导致数据流结尾的数据丢失. 这时结尾前可能仍然是乱序状态, 因此需要等待所有乱序数据排列完并写入后才能将 `_output` 关闭. 
 
@@ -182,6 +182,57 @@ size_t StreamReassembler::ack_idx() const { return _first_unassembled_idx; }
 
 bool StreamReassembler::input_ended() const { return _eof && empty(); }
 ```
+
+
+## Lab_2
+
+### wrapping\_integers
+
+编写一个包装整数类, 用于实现序列号的加减法. 实现 `WrappingInt32` 和 `uint64_t` 两个类之间的转换函数. 
+
+这里的实现很简单, 对于绝对序列号转化成序列号, 只需要加上基准偏移量 `isn` 即可, 同时由于序列号自动取模了, 因此不需要其他操作. 
+
+对于序列号转化成绝对序列号, 想要找到离 `checkpoint` 最近的绝对序列号. 首先注意到有以下式子成立:
+$$
+\begin{aligned}
+\text{checkpoint} &= \text{n} - \text{isn} + k * 2^{32} + \text{remainder}\\
+\end{aligned}
+$$
+
+其中 `k` 为任意整数, `remainder` 为余数. 通过比较 `2 * remainder` 和 `1 << 32` 的大小, 就可以决定应该靠近哪一边. 计算绝对序列号时应该取 `k` 还是 `k+1`. 
+
+但是这里有个坑, 就是当 `checkpoint < remainder` 时, 会导致算出的值小于 0, 但是我们绝对序列号的类型是 `uint64_t`, 因此会导致溢出. 所以这种情况应该单独处理. 
+
+wrapping\_integers.cc
+```Cpp
+WrappingInt32 wrap(uint64_t n, WrappingInt32 isn) { return isn + uint32_t(n); }
+
+uint64_t unwrap(WrappingInt32 n, WrappingInt32 isn, uint64_t checkpoint) {
+    uint64_t res = uint64_t(n - isn);
+    uint64_t RING = 1ul << 32;
+    if (res >= checkpoint) {
+        uint64_t k = (res - checkpoint) / RING;
+        uint64_t Mod = (res - checkpoint) % RING;
+        if (2ul * Mod > RING && checkpoint >= Mod) {
+            res -= (k + 1ul) * RING;
+        } else {
+            res -= k * RING;
+        }
+    } else {
+        uint64_t k = (checkpoint - res) / RING;
+        uint64_t Mod = (checkpoint - res) % RING;
+        if (2ul * Mod > RING) {
+            res += (k + 1ul) * RING;
+        } else {
+            res += k * RING;
+        }
+    }
+    return res;
+}
+```
+
+### tcp_receiver
+
 
 ***
 > Wait for next lab...
