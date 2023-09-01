@@ -262,6 +262,8 @@ bool StreamReassembler::input_ended() const { return _eof && empty(); }
 
 然后是 `ackno` 函数的实现, 略有小坑, 需要判断是否收到过 `syn` 数据包. 如果收到过, 那么通过绝对序列号计算序列号返回即可; 如果没有收到过, 那么 `ackno` 应该返回 `std::nullopt` 而不是 0. ( 为啥不可以返回 0 啊喂 ).
 
+PS: 哦由于 `syn` 数据包有初始偏移量 `isn` 所以在未收到 `syn` 数据包时, 绝对序列号应该是 0, 序列号是无法预测的. 所以这里的 `ackno` 函数应该返回 `std::nullopt` 而不是 0.
+
 `window_size` 则较为简单, 直接返回 `stream_reassembler` 的剩余容量即可.
 
 `check_lab2` 的运行时间在 0.90~1.10s 左右.
