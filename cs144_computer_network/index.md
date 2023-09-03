@@ -16,7 +16,7 @@
 运行 [setup_dev_env.sh](https://web.stanford.edu/class/cs144/vm_howto/setup_dev_env.sh) 配置实验所需环境. 之后 git clone 仓库, 我使用的仓库是 [PKUFlyingPig/CS144-Computer-Network](https://github.com/PKUFlyingPig/CS144-Computer-Network) , 再按照 README.md 配置即可.
 
 这里有个坑就是由于缺失了 \<array\> \<stdexcept\> 两个文件头导致执行 `make` 时会报错, 需要在对应文件手动补上. \(我也不是很理解为什么三年前的高星仓库 clone 下来不能直接用. 
-![error](./img/error.png)
+{{< figure src="./img/error.png" caption="`figure-1` error">}}
 
 ### 测试环境
 
@@ -352,5 +352,161 @@ size_t TCPReceiver::window_size() const { return _capacity - _reassembler.stream
 ```
 
 
+## Lab_3
+
+### tcp\_sender
+
+实现 TCP 发送端, 用于发送 TCP 数据包并接收 ACK 数据包. 主要函数有 `fill_window` `ack_received` `tick` 三个. 下面介绍各个函数的实现逻辑. 
+
+#### Function fill\_window()
+
+{{< figure src="./img/sending_space.png" caption="`figure-2` sending_space">}}
+
+1. 计算接收端当前窗口剩余大小 `sending_space`, 默认为 1. 计算公式如上图 `figure-2` 所示. 
+2. 当 `sending_space` 大于 0 且未发送 `fin` 数据包时, 持续发送数据包以填满窗口. 
+3. 序列号 `seqno` 为 `next_seqno`, 下一个待发送数据包的序列号.
+4. 如果未发送 `syn` 数据包, 则设置 `header().syn = true`, `sending_space` 减一. 
+5. 计算能发送的数据包大小并填入 `payload()` , `sending_space` 减去数据包大小. 
+6. 如果 `sending_space` 大于 0 且数据流结束, 则设置 `header().fin = true`, `sending_space` 减一. 
+7. 检测是否为空数据报, 是则退出函数. 
+8. 将数据包加入发送队列和超时队列, 并更新 `next_seqno` 和 `bytes_in_flight` .
+9. 发送数据包, 并检测是否开始计时. 
+10. 重复 2~9 步骤直到窗口填满或者数据流结束.
+
+#### Function ack\_received()
+
+1. 如果收到的 ACK 数据包不在发送队列中, 则退出函数. 
+2. 更新存储的接收端窗口大小 `window_size` . 
+3. 如果收到的 ACK 数据包序列号大于等于超时队列中的序列号, 则将超时队列中的数据包弹出, 并更新 `bytes_in_flight` 和计时. 
+4. 重复第 3 步骤直到收到的 ACK 数据包序列号小于超时队列中的序列号或者超时队列为空. 
+5. 如果有更新队列, 那么重新计时. 如果队列为空, 则停止计时. 
+
+#### Function tick()
+
+1. 如果计时器已经停止, 则退出函数.
+2. 计算是否超时, 如果没有超时, 则退出函数.
+3. 如果超时, 则重传第一个未确认的数据包, 并重新计时. 如果接收方有空余, 那么重传次数 +1, 超时时间翻倍. 
+
+tcp\_sender.hh
+```Cpp
+class TCPSender {
+  private:
+    bool _fin_sent = false;
+    uint64_t _abs_ackno = 0;
+    uint64_t _bytes_in_flight = 0;
+    uint16_t _receiver_window_size = 1;
+
+    bool _time_running = false;
+    unsigned int _rto = 0;
+    unsigned int _time_elapsed = 0;
+    unsigned int _consecutive_retransmissions = 0;
+    std::queue<TCPSegment> _segments_outstanding{};
+    // ...
+}
+```
+
+tcp\_sender.cc
+```Cpp
+//! \param[in] capacity the capacity of the outgoing byte stream
+//! \param[in] retx_timeout the initial amount of time to wait before retransmitting the oldest outstanding segment
+//! \param[in] fixed_isn the Initial Sequence Number to use, if set (otherwise uses a random ISN)
+TCPSender::TCPSender(const size_t capacity, const uint16_t retx_timeout, const std::optional<WrappingInt32> fixed_isn)
+    : _rto(retx_timeout)
+    , _isn(fixed_isn.value_or(WrappingInt32{random_device()()}))
+    , _initial_retransmission_timeout{retx_timeout}
+    , _stream(capacity) {}
+
+uint64_t TCPSender::bytes_in_flight() const { return _bytes_in_flight; }
+
+void TCPSender::fill_window() {
+    size_t sending_space = _abs_ackno + (_receiver_window_size != 0 ? _receiver_window_size : 1) - _next_seqno;
+    while (sending_space > 0 && !_fin_sent) {
+        TCPSegment seg;
+        seg.header().seqno = next_seqno();
+        if (_next_seqno == 0) {
+            seg.header().syn = true;
+            sending_space--;
+        }
+        size_t read_size = min(sending_space, TCPConfig::MAX_PAYLOAD_SIZE);
+        seg.payload() = stream_in().read(read_size);
+        sending_space -= seg.payload().size();
+        if (stream_in().eof() && sending_space > 0) {
+            seg.header().fin = true;
+            _fin_sent = true;
+            sending_space--;
+        }
+        if (seg.length_in_sequence_space() == 0) {
+            return;
+        }
+        segments_out().emplace(seg);
+        if (!_time_running) {
+            _time_running = true;
+            _time_elapsed = 0;
+        }
+        _segments_outstanding.push(seg);
+        _next_seqno += seg.length_in_sequence_space();
+        _bytes_in_flight += seg.length_in_sequence_space();
+    }
+}
+
+//! \param ackno The remote receiver's ackno (acknowledgment number)
+//! \param window_size The remote receiver's advertised window size
+void TCPSender::ack_received(const WrappingInt32 ackno, const uint16_t window_size) {
+    _abs_ackno = unwrap(ackno, _isn, _next_seqno);
+    if (_abs_ackno > _next_seqno) {
+        return;
+    }
+    _receiver_window_size = window_size;
+    bool new_ack = false;
+    while (!_segments_outstanding.empty()) {
+        TCPSegment seg = _segments_outstanding.front();
+        size_t len = seg.length_in_sequence_space();
+        uint64_t seqno = unwrap(seg.header().seqno, _isn, _next_seqno);
+        if (seqno + len > _abs_ackno) {
+            break;
+        }
+        _segments_outstanding.pop();
+        _bytes_in_flight -= len;
+        new_ack = true;
+    }
+    if (new_ack) {
+        _rto = _initial_retransmission_timeout;
+        _time_elapsed = 0;
+        _time_running = !_segments_outstanding.empty();
+        _consecutive_retransmissions = 0;
+    }
+}
+
+//! \param[in] ms_since_last_tick the number of milliseconds since the last call to this method
+void TCPSender::tick(const size_t ms_since_last_tick) {
+    if (!_time_running) {
+        return;
+    }
+    _time_elapsed += ms_since_last_tick;
+    if (_time_elapsed >= _rto) {
+        _segments_out.push(_segments_outstanding.front());
+        if (_receiver_window_size > 0) {
+            _consecutive_retransmissions++;
+            _rto <<= 1;
+        }
+        _time_elapsed = 0;
+    }
+}
+
+unsigned int TCPSender::consecutive_retransmissions() const { return _consecutive_retransmissions; }
+
+void TCPSender::send_empty_segment() {
+    TCPSegment seg;
+    seg.header().seqno = next_seqno();
+    _segments_out.push(seg);
+}
+```
+
+
+## Lab_4
+
 ***
-> Wait for next lab...
+{{< admonition >}}
+wait for updating
+{{< /admonition >}}
+
