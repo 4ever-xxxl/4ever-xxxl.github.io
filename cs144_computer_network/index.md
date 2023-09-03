@@ -9,12 +9,51 @@
 
 ## 环境搭建
 
+### 运行环境
+
 本次环境基于官方镜像 VirtualBox 搭建, 镜像文件以及搭建教程可以在 [这里](https://stanford.edu/class/cs144/vm_howto/vm-howto-image.html) 找到. VirtualBox 启动后照常配置, 使用 Vscode 远程连接到虚拟机, Vscode 中配置插件 `C/C++` `GitLens`, 之后的实验都在 Vscode 中进行. 
 
 运行 [setup_dev_env.sh](https://web.stanford.edu/class/cs144/vm_howto/setup_dev_env.sh) 配置实验所需环境. 之后 git clone 仓库, 我使用的仓库是 [PKUFlyingPig/CS144-Computer-Network](https://github.com/PKUFlyingPig/CS144-Computer-Network) , 再按照 README.md 配置即可.
 
 这里有个坑就是由于缺失了 \<array\> \<stdexcept\> 两个文件头导致执行 `make` 时会报错, 需要在对应文件手动补上. \(我也不是很理解为什么三年前的高星仓库 clone 下来不能直接用. 
 ![error](./img/error.png)
+
+### 测试环境
+
+为了便于调试并且不影响 Release 版本测速, 我在实验目录下新建了 Debug 目录, 使用 `cmake .. -DCMAKE_BUILD_TYPE=Debug` 生成 Debug 版本的可执行文件. Vscode 使用的测试配置文件如下: 
+
+launch.json
+```json
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "CS144Lab debug",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/CS144-Computer-Network/Debug/tests/${fileBasenameNoExtension}", //!设置为测试程序源码相对应的目标程序路径
+			"args": [],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}",
+			"environment": [],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "为 gdb 启用整齐打印",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			],
+			"miDebuggerPath": "/usr/bin/gdb"
+		}
+	]
+}
+```
+
+但是这种情况下还是没办法愉快的调试, 因为 DEBUG 的编译参数是 `-Og`, 还是会导致部分变量出现 OPTIMIZEOUT 的情况. 因此我们需要修改 `/etc/cflags.cmake` 文件, 将 `-Og` 改成 `-O0` . 
+
+接下来就可以愉快的调试啦. 
 
 
 ## Lab_0
