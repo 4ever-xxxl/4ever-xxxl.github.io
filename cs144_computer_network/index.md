@@ -1,4 +1,4 @@
-# CS144_Lab 笔记 (updating)
+# CS144_Lab 笔记 (lab 0-3)
 
 很早就听闻 CS144 Lab 的大名, 但是由于各种原因一直没有上手实践. 直到最近才开始着手实践, 本文将记录我在实践过程中的一些笔记.
 <!--more-->
@@ -502,11 +502,8 @@ void TCPSender::send_empty_segment() {
 }
 ```
 
-
-## Lab_4
-
 ***
 {{< admonition >}}
-wait for updating
+目前可能打算暂时做到这里, 之后有时间再继续更新. 接下来时间会做一些 CNSS Dev 的题目, 之后可能会更新一些个人题解. 
 {{< /admonition >}}
 
