@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Build_your_own_pstree - xxxl&#39;s Blog</title><meta name="Description" content="摘要：这是 build_your_own 系列的第一篇, 从实现一个简单的 pstree 开始"><meta property="og:title" content="Build_your_own_pstree" />
+<meta property="og:description" content="摘要：这是 build_your_own 系列的第一篇, 从实现一个简单的 pstree 开始" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://4ever-xxxl.github.io/build_your_own_pstree/" /><meta property="og:image" content="https://4ever-xxxl.github.io/47"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-09-18T23:04:36+08:00" />
+<meta property="article:modified_time" content="2023-09-18T23:04:36+08:00" /><meta property="og:site_name" content="xxxl&#39;s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://4ever-xxxl.github.io/47"/>
+
+<meta name="twitter:title" content="Build_your_own_pstree"/>
+<meta name="twitter:description" content="摘要：这是 build_your_own 系列的第一篇, 从实现一个简单的 pstree 开始"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/image/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://4ever-xxxl.github.io/build_your_own_pstree/" /><link rel="prev" href="https://4ever-xxxl.github.io/cs144_computer_network/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Build_your_own_pstree",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/4ever-xxxl.github.io\/build_your_own_pstree\/"
+        },"image": ["https:\/\/4ever-xxxl.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "build_your_own, pstree","wordcount":  2366 ,
+        "url": "https:\/\/4ever-xxxl.github.io\/build_your_own_pstree\/","datePublished": "2023-09-18T23:04:36+08:00","dateModified": "2023-09-18T23:04:36+08:00","publisher": {
+            "@type": "Organization",
+            "name": "m1ca","logo": "https:\/\/4ever-xxxl.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "m1ca"
+            },"description": "摘要：这是 build_your_own 系列的第一篇, 从实现一个简单的 pstree 开始"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="xxxl&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/image/favicon.png"
+        data-srcset="/image/favicon.png, /image/favicon.png 1.5x, /image/favicon.png 2x"
+        data-sizes="auto"
+        alt="/image/favicon.png"
+        title="/image/favicon.png" />xxl</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about/" title="About"> About </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="xxxl&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/image/favicon.png"
+        data-srcset="/image/favicon.png, /image/favicon.png 1.5x, /image/favicon.png 2x"
+        data-sizes="auto"
+        alt="/image/favicon.png"
+        title="/image/favicon.png" />xxl</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about/" title="About">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Build_your_own_pstree</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/4ever-xxxl" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>m1ca</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/build_your_own/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>build_your_own</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-09-18">2023-09-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2366 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-前言">1. 前言</a></li>
+    <li><a href="#2-pstree">2. pstree</a></li>
+    <li><a href="#3-实现">3. 实现</a>
+      <ul>
+        <li><a href="#31-结构体定义">3.1. 结构体定义</a></li>
+        <li><a href="#32-从内核获取进程信息">3.2. 从内核获取进程信息</a></li>
+        <li><a href="#33-从内核获取进程树">3.3. 从内核获取进程树</a></li>
+        <li><a href="#34-打印进程树">3.4. 打印进程树</a></li>
+        <li><a href="#35-运行结果">3.5. 运行结果</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-总结">4. 总结</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="1-前言">1. 前言</h2>
+<p>学了这么久的计算机, 却没有什么实际产出. 并且不是很愿意搞开发, 正好这学期上操作系统课, 于是就有了 build_your_own 系列的想法. 又恰好, 在早八的马原课<del>由于二进制的随机排列组合</del>, 我写下了 pstree. 于是这个系列我们从 pstree 开始.</p>
+<h2 id="2-pstree">2. pstree</h2>
+<p>pstree 是一个 Linux 下的命令行工具, 用于显示进程树. 完整的 pstree 功能还是很多的, 我这里选择了简单的 -p 参数版本实现.</p>
+<div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw" aria-hidden="true"></i>&gt; pstree -p<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">显示进程树, 并显示进程的 PID.</div>
+        </div>
+    </div>
+<figure><img src="./img/pstree_in_kernel.png"
+         alt="figure-1 pstree_in_kernel"/><figcaption>
+            <p><code>figure-1</code> pstree_in_kernel</p>
+        </figcaption>
+</figure>
+
+<h2 id="3-实现">3. 实现</h2>
+<h3 id="31-结构体定义">3.1. 结构体定义</h3>
+<p>首先我们要定义一个进程树的结构体, 用于存储进程的信息.</p>
+<p>我采用的是链表的形式存储进程树, 一个进程的子进程通过 <code>child</code> 指针指向, 兄弟进程通过 <code>next</code> 指针指向.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">node</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">__pid_t</span> <span class="n">pid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">__pid_t</span> <span class="n">ppid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">struct</span> <span class="n">node</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">struct</span> <span class="n">node</span> <span class="o">*</span><span class="n">child</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">node</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后整个进程树通过一个数组存储, 数组的下标为进程的 PID. 最大值为内核定义的最大 PID, 这个值定义在 <code>/proc/sys/kernel/pid_max</code>, 需要注意的是在不同的内核版本中可能不同. 例如在较早的内核版本中, 这个值为 32768.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="c1">// MAX PID defined in /proc/sys/kernel/pid_max
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#define MAX 4194304
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="n">node</span> <span class="o">*</span><span class="n">Tree</span><span class="p">[</span><span class="n">MAX</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="nb">NULL</span><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="32-从内核获取进程信息">3.2. 从内核获取进程信息</h3>
+<p>首先我们要介绍 /proc 目录.</p>
+<p>/proc 目录是 Linux 系统中的一个特殊目录, 它提供了对运行中进程和系统内核的访问. 它是一个虚拟文件系统, 其中的文件和目录并不在磁盘上实际存在, 而是由内核在运行时动态生成的. /proc 目录下的文件和目录提供了对系统状态和进程信息的实时访问.</p>
+<p>于是通过对 /proc 目录的访问, 遍历目录下的所有数字目录, 即可获取系统当前状态的所有进程.</p>
+<p>func: <code>make_tree</code> 用于遍历 /proc 目录, 并获取所有进程的信息.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">make_tree</span><span class="p">(</span><span class="n">node</span> <span class="o">*</span><span class="n">Tree</span><span class="p">[])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">node</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">node</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)</span> <span class="o">*</span> <span class="mi">40</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">strcpy</span><span class="p">(</span><span class="n">Tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="s">&#34;root&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">DIR</span> <span class="o">*</span><span class="n">dp</span> <span class="o">=</span> <span class="nf">opendir</span><span class="p">(</span><span class="s">&#34;/proc&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">dp</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#34;%s&#34;</span><span class="p">,</span> <span class="s">&#34;Can &#39;t open /proc/&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">struct</span> <span class="n">dirent</span> <span class="o">*</span><span class="n">entry</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">while</span> <span class="p">((</span><span class="n">entry</span> <span class="o">=</span> <span class="nf">readdir</span><span class="p">(</span><span class="n">dp</span><span class="p">))</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">__pid_t</span> <span class="n">pid</span> <span class="o">=</span> <span class="nf">atoi</span><span class="p">(</span><span class="n">entry</span><span class="o">-&gt;</span><span class="n">d_name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">read_status</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">Tree</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>插播和本次实现没啥关系的小 tips, <code>/proc/self</code> 是一个软链接, 指向当前进程的信息. 可以轻易的获取到当前进程的信息.</p>
+<h3 id="33-从内核获取进程树">3.3. 从内核获取进程树</h3>
+<p>然后介绍 <code>/proc/[pid]/stat</code> 文件, 这一文件保存了进程的状态信息.</p>
+<p><code>/proc/[pid]/stat</code> 文件的内容如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">pid：进程ID
+</span></span><span class="line"><span class="cl">comm：进程的命令名
+</span></span><span class="line"><span class="cl">state：进程的状态
+</span></span><span class="line"><span class="cl">ppid：父进程的进程ID
+</span></span><span class="line"><span class="cl">pgrp：进程组的进程ID
+</span></span><span class="line"><span class="cl">session：会话的进程ID
+</span></span><span class="line"><span class="cl">tty_nr：与进程关联的终端设备号
+</span></span><span class="line"><span class="cl">tpgid：进程所属的前台进程组ID
+</span></span><span class="line"><span class="cl">flags：进程的标志位
+</span></span><span class="line"><span class="cl">minflt：不需要从磁盘加载页面的次数（次缺页错误）
+</span></span><span class="line"><span class="cl">cminflt：在进程的子进程中不需要从磁盘加载页面的次数（次缺页错误）
+</span></span><span class="line"><span class="cl">majflt：需要从磁盘加载页面的次数（主缺页错误）
+</span></span><span class="line"><span class="cl">cmajflt：在进程的子进程中需要从磁盘加载页面的次数（主缺页错误）
+</span></span><span class="line"><span class="cl">utime：进程在用户态运行的时间（时钟滴答数）
+</span></span><span class="line"><span class="cl">stime：进程在内核态运行的时间（时钟滴答数）
+</span></span><span class="line"><span class="cl">cutime：进程的所有已死亡的子进程在用户态运行的时间（时钟滴答数）
+</span></span><span class="line"><span class="cl">cstime：进程的所有已死亡的子进程在内核态运行的时间（时钟滴答数）
+</span></span><span class="line"><span class="cl">priority：进程的调度优先级
+</span></span><span class="line"><span class="cl">nice：进程的静态优先级
+</span></span><span class="line"><span class="cl">num_threads：进程所拥有的线程数
+</span></span><span class="line"><span class="cl">itrealvalue：下一个计时器中的值
+</span></span><span class="line"><span class="cl">starttime：进程启动时的时钟滴答数
+</span></span><span class="line"><span class="cl">vsize：虚拟内存大小（字节）
+</span></span><span class="line"><span class="cl">rss：常驻内存集大小（页面数）
+</span></span><span class="line"><span class="cl">rsslim：进程的常驻内存集大小的限制（字节）
+</span></span><span class="line"><span class="cl">startcode：可执行代码的起始地址
+</span></span><span class="line"><span class="cl">endcode：可执行代码的结束地址
+</span></span><span class="line"><span class="cl">startstack：栈的起始地址
+</span></span><span class="line"><span class="cl">kstkesp：当前栈指针（ESP）
+</span></span><span class="line"><span class="cl">kstkeip：当前指令指针（EIP）
+</span></span><span class="line"><span class="cl">signal：挂起的信号位图
+</span></span><span class="line"><span class="cl">blocked：阻塞的信号位图
+</span></span><span class="line"><span class="cl">sigignore：忽略的信号位图
+</span></span><span class="line"><span class="cl">sigcatch：捕获的信号位图
+</span></span><span class="line"><span class="cl">wchan：进程正在等待的地址
+</span></span><span class="line"><span class="cl">nswap：交换出的页面数
+</span></span><span class="line"><span class="cl">cnswap：在进程的子进程中交换出的页面数
+</span></span><span class="line"><span class="cl">exit_signal：进程终止时发送给父进程的信号
+</span></span><span class="line"><span class="cl">processor：执行进程的处理器ID
+</span></span><span class="line"><span class="cl">rt_priority：实时优先级
+</span></span><span class="line"><span class="cl">policy：调度策略
+</span></span><span class="line"><span class="cl">delayacct_blkio_ticks：块IO延迟账户时钟滴答数
+</span></span><span class="line"><span class="cl">guest_time：虚拟CPU时间（以时钟滴答数为单位）
+</span></span><span class="line"><span class="cl">cguest_time：在进程的子进程中的虚拟CPU时间（以时钟滴答数为单位）
+</span></span><span class="line"><span class="cl">start_data：数据段的起始地址
+</span></span><span class="line"><span class="cl">end_data：数据段的结束地址
+</span></span><span class="line"><span class="cl">start_brk：堆的起始地址
+</span></span><span class="line"><span class="cl">arg_start：命令行参数的起始地址
+</span></span><span class="line"><span class="cl">arg_end：命令行参数的结束地址
+</span></span><span class="line"><span class="cl">env_start：环境变量的起始地址
+</span></span><span class="line"><span class="cl">env_end：环境变量的结束地址
+</span></span><span class="line"><span class="cl">exit_code：进程的退出状态
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>本次实现我们只需要获取进程的父进程 PID 和进程名. 通过读取 <code>/proc/[pid]/stat</code> 文件即可.</p>
+<p>为了构建进程树, 我们需要递归的获取父进程的信息直到父进程为 0, 即 root 进程. 然后为了防止重复遍历, 我们检验了指针是否为空.</p>
+<p>func: <code>read_status</code> 用于获取进程的信息, 并递归的获取父进程的信息.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">read_status</span><span class="p">(</span><span class="n">__pid_t</span> <span class="n">pid</span><span class="p">,</span> <span class="n">node</span> <span class="o">*</span><span class="n">Tree</span><span class="p">[])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">Tree</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Tree</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">node</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">node</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Tree</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)</span> <span class="o">*</span> <span class="mi">40</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="o">*</span><span class="n">processpath</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)</span> <span class="o">*</span> <span class="mi">20</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">sprintf</span><span class="p">(</span><span class="n">processpath</span><span class="p">,</span> <span class="s">&#34;/proc/%d/stat&#34;</span><span class="p">,</span> <span class="n">pid</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">FILE</span> <span class="o">*</span><span class="n">fp</span> <span class="o">=</span> <span class="nf">fopen</span><span class="p">(</span><span class="n">processpath</span><span class="p">,</span> <span class="s">&#34;r&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">fp</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#34;Can &#39;t open %s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">processpath</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">free</span><span class="p">(</span><span class="n">processpath</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">__pid_t</span> <span class="n">_pid</span><span class="p">,</span> <span class="n">ppid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">pname</span><span class="p">[</span><span class="mi">40</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">fscanf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">&#34;%d (%s %c %d&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_pid</span><span class="p">,</span> <span class="n">pname</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ppid</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">pname</span><span class="p">[</span><span class="nf">strlen</span><span class="p">(</span><span class="n">pname</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">strcpy</span><span class="p">(</span><span class="n">Tree</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="n">pname</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">assert</span><span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="n">_pid</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Tree</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">pid</span> <span class="o">=</span> <span class="n">pid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Tree</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ppid</span> <span class="o">=</span> <span class="n">ppid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">fclose</span><span class="p">(</span><span class="n">fp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">free</span><span class="p">(</span><span class="n">processpath</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nf">read_status</span><span class="p">(</span><span class="n">ppid</span><span class="p">,</span> <span class="n">Tree</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">Tree</span><span class="p">[</span><span class="n">ppid</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">child</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Tree</span><span class="p">[</span><span class="n">ppid</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">child</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">[</span><span class="n">pid</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">node</span> <span class="o">*</span><span class="n">bro</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">[</span><span class="n">ppid</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">child</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="p">(</span><span class="n">bro</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">bro</span> <span class="o">=</span> <span class="n">bro</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bro</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">[</span><span class="n">pid</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="34-打印进程树">3.4. 打印进程树</h3>
+<p>打印进程树则比较简单, 进行一个记录深度的 DFS 即可. 为了美观, 我们使用了制表符  <code>└─</code> 和 <code>├─</code> 进行分割. 并因此需要记录当前进程是否为父进程的最后一个子进程. 判断方法是 <code>Tree[child-&gt;pid]-&gt;next == NULL</code>.</p>
+<p>func: <code>print_tree</code> 用于打印进程树.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">print_tree</span><span class="p">(</span><span class="n">node</span> <span class="o">*</span><span class="n">Tree</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">pid</span><span class="p">,</span> <span class="kt">int</span> <span class="n">depth</span><span class="p">,</span> <span class="kt">int</span> <span class="n">last_child</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">depth</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="n">last_child</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;└─&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;├─&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;│  &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%s (%d)</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">Tree</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="n">pid</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">node</span> <span class="o">*</span><span class="n">child</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">child</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">while</span> <span class="p">(</span><span class="n">child</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">print_tree</span><span class="p">(</span><span class="n">Tree</span><span class="p">,</span> <span class="n">child</span><span class="o">-&gt;</span><span class="n">pid</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Tree</span><span class="p">[</span><span class="n">child</span><span class="o">-&gt;</span><span class="n">pid</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">child</span> <span class="o">=</span> <span class="n">child</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="35-运行结果">3.5. 运行结果</h3>
+<p>不要忘记释放内存喵.</p>
+<figure><img src="./img/mypstree.png"
+         alt="figure-2 mypstree"/><figcaption>
+            <p><code>figure-2</code> mypstree</p>
+        </figcaption>
+</figure>
+
+<h2 id="4-总结">4. 总结</h2>
+<p>build_your_own 系列的第一篇就到这里了. 这次实现比较简单, 希望能坚持下去不要咕咕咕 (逃</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-09-18</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/build_your_own_pstree/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://4ever-xxxl.github.io/build_your_own_pstree/" data-title="Build_your_own_pstree" data-hashtags="build_your_own,pstree"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://4ever-xxxl.github.io/build_your_own_pstree/" data-hashtag="build_your_own"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://4ever-xxxl.github.io/build_your_own_pstree/" data-title="Build_your_own_pstree"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://4ever-xxxl.github.io/build_your_own_pstree/" data-title="Build_your_own_pstree"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://4ever-xxxl.github.io/build_your_own_pstree/" data-title="Build_your_own_pstree"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/build_your_own/">build_your_own</a>,&nbsp;<a href="/tags/pstree/">pstree</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/cs144_computer_network/" class="prev" rel="prev" title="CS144_Lab 笔记 (lab 0-3)"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>CS144_Lab 笔记 (lab 0-3)</a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.117.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/4ever-xxxl" target="_blank">m1ca</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOKFj8TM4CYhAR","darkTheme":"dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"light","mapping":"pathname","reactionsEnabled":"1","repo":"4ever-xxxl/4ever-xxxl.github.io","repoId":"R_kgDOKFj8TA"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
