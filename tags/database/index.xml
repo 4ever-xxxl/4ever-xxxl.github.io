@@ -5,12 +5,12 @@
         <description>Database - 标签 - xxxl&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>m1ca@cnss.io (m1ca)</managingEditor>
             <webMaster>m1ca@cnss.io (m1ca)</webMaster><lastBuildDate>Sun, 14 Jan 2024 16:17:46 &#43;0800</lastBuildDate><atom:link href="https://4ever-xxxl.github.io/tags/database/" rel="self" type="application/rss+xml" /><item>
-    <title>CMU 15445 Project 0</title>
+    <title>CMU 15445(2023-fall) Project 0</title>
     <link>https://4ever-xxxl.github.io/cmu-15445-project-0/</link>
     <pubDate>Sun, 14 Jan 2024 16:17:46 &#43;0800</pubDate>
     <author>m1ca</author>
     <guid>https://4ever-xxxl.github.io/cmu-15445-project-0/</guid>
-    <description><![CDATA[摘要：]]></description>
+    <description><![CDATA[摘要：CMU 15445 Project 0 的实现笔记以及一些坑点.]]></description>
 </item>
 </channel>
 </rss>

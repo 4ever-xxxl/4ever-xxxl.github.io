@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>CMU 15445 Project 0 - xxxl&#39;s Blog</title><meta name="Description" content="摘要："><meta property="og:title" content="CMU 15445 Project 0" />
-<meta property="og:description" content="摘要：" />
+        <title>CMU 15445(2023-fall) Project 0 - xxxl&#39;s Blog</title><meta name="Description" content="摘要：CMU 15445 Project 0 的实现笔记以及一些坑点."><meta property="og:title" content="CMU 15445(2023-fall) Project 0" />
+<meta property="og:description" content="摘要：CMU 15445 Project 0 的实现笔记以及一些坑点." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://4ever-xxxl.github.io/cmu-15445-project-0/" /><meta property="og:image" content="https://4ever-xxxl.github.io/47"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2024-01-14T16:17:46+08:00" />
@@ -13,8 +13,8 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://4ever-xxxl.github.io/47"/>
 
-<meta name="twitter:title" content="CMU 15445 Project 0"/>
-<meta name="twitter:description" content="摘要："/>
+<meta name="twitter:title" content="CMU 15445(2023-fall) Project 0"/>
+<meta name="twitter:description" content="摘要：CMU 15445 Project 0 的实现笔记以及一些坑点."/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/image/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://4ever-xxxl.github.io/cmu-15445-project-0/" /><link rel="prev" href="https://4ever-xxxl.github.io/build_your_own_pstree/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -22,18 +22,18 @@
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "CMU 15445 Project 0",
+        "headline": "CMU 15445(2023-fall) Project 0",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/4ever-xxxl.github.io\/cmu-15445-project-0\/"
-        },"image": ["https:\/\/4ever-xxxl.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Project, CMU15445, Database","wordcount":  102 ,
+        },"image": ["https:\/\/4ever-xxxl.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Project, CMU15445, Database","wordcount":  1242 ,
         "url": "https:\/\/4ever-xxxl.github.io\/cmu-15445-project-0\/","datePublished": "2024-01-14T16:17:46+08:00","dateModified": "2024-01-14T16:17:46+08:00","publisher": {
             "@type": "Organization",
             "name": "m1ca","logo": "https:\/\/4ever-xxxl.github.io\/images\/avatar.png"},"author": {
                 "@type": "Person",
                 "name": "m1ca"
-            },"description": "摘要："
+            },"description": "摘要：CMU 15445 Project 0 的实现笔记以及一些坑点."
     }
     </script></head>
     <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -81,10 +81,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">CMU 15445 Project 0</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">CMU 15445(2023-fall) Project 0</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/4ever-xxxl" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>m1ca</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/project/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Project</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-01-14">2024-01-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 102 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-01-14">2024-01-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1242 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -92,17 +92,122 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#1-环境配置">1. 环境配置</a></li>
-    <li><a href="#2-task-1">2. Task 1</a></li>
-    <li><a href="#3-task-2">3. Task 2</a></li>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#环境配置">环境配置</a></li>
+    <li><a href="#task-1---copy-on-write-trie">Task #1 - Copy-On-Write Trie</a>
+      <ul>
+        <li><a href="#get">Get</a></li>
+        <li><a href="#put">Put</a></li>
+        <li><a href="#remove">Remove</a></li>
+      </ul>
+    </li>
+    <li><a href="#task-2---concurrent-key-value-store">Task #2 - Concurrent Key-Value Store</a></li>
+    <li><a href="#task-3---debugging">Task #3 - Debugging</a></li>
+    <li><a href="#task-4---sql-string-functions">Task #4 - SQL String Functions</a></li>
+    <li><a href="#项目提交的坑点">项目提交的坑点</a></li>
+    <li><a href="#总结">总结</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="1-环境配置">1. 环境配置</h2>
-<p>直接跟着 README.md 的步骤来就行了, 网上类似的教程也挺多, 不多说了.</p>
-<h2 id="2-task-1">2. Task 1</h2>
-<p>实现一个写时复制的前缀树(COW Trie), 用于存储键值对.</p>
-<h2 id="3-task-2">3. Task 2</h2>
-<p>对 Task1 中的实现进行并行化, 使得可以同时有多个读者和一个写者同时访问Trie.</p></div><div class="post-footer" id="post-footer">
+            </div><div class="content" id="content"><h2 id="前言">前言</h2>
+<p>寒假无所事事决定刷一下 CMU 15445 的 Project, 顺便学习一下 C++. 结果我 Project 0 就写得汗流浃背的, 直接打破了我对 C++ 的幻想. 顺便批评一下 UESTC 的 C++ 教学, 2 个学分只教了个面向对象, modern Cpp 的内容一点没有. 第一次写的时候, 智能指针看得我头大.</p>
+<blockquote>
+<p>噫！『 上课耽误学习 』 诚不欺我。</p>
+</blockquote>
+<p>基于课程要求, 本文并不包含代码实现, 也不会公开仓库. 不过欢迎读者找我交流.
+<a href="mailto:lx10ng@qq.com" rel="">lx10ng@qq.com</a></p>
+<h2 id="环境配置">环境配置</h2>
+<p>直接跟着 <code>README.md</code> 的步骤来就行了, 网上类似的教程也挺多, 不多说了.</p>
+<p>我的环境是 VSCode 远程连接 <code>Ubuntu 22.04</code>, <code>Clang++-18</code>, <code>clangd</code>. 官方推荐是 <code>Clang++14</code>, 亲测除了会在 cmake 时有一句 warning 之外并无影响, 所以也就懒得改了.</p>
+<h2 id="task-1---copy-on-write-trie">Task #1 - Copy-On-Write Trie</h2>
+<p>实现一个写时复制的前缀树 (COW Trie), 用于存储键值对和版本管理. 包括实现三个函数 <code>Get</code>, <code>Put</code> 和 <code>Remove</code>.</p>
+<h3 id="get">Get</h3>
+<p>沿着深度向下寻找便是, 找不到或者根结点为空就返回 <code>nullptr</code>. 找到结点之后来到了 C++ 喜闻乐见的类型转换, 我们需要对这个基类的智能指针强制转换.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">ret</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">TrieNodeWithValue</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">terminal_node</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后进行对 <code>ret</code> 进行空判断来推出 <code>terminal_node</code> 是父类还是子类, 如果是父类那么是错误查询返回空指针.</p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw" aria-hidden="true"></i>坑点<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">对根结点为空的判断错误在这个 Get 的测试中是看不出来的, 要在后面 Put 的调试中才能发现.</div>
+        </div>
+    </div>
+<h3 id="put">Put</h3>
+<p>整个 Project 0 中最难的一部分, 难点在于对 <strong>Copy-On-Write</strong> 的理解, 以及对智能指针和 <code>std::move</code> 的利用.</p>
+<p>整个流程大致如下:</p>
+<ol>
+<li>沿着路径向下寻找, 一边寻找一边复制路径结点直到到底或者 key 末尾时转 2 或 3;</li>
+<li>如果找完路径有剩, 说明剩下的结点都需要自己新建;</li>
+<li>如果找到已有的路径, 那么对 terminal_node 进行类型检验, 分别进行 clone&amp;polish / new 的操作;</li>
+<li>最后返回 new_root 的 trie tree.</li>
+</ol>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw" aria-hidden="true"></i>坑点<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><p>初始时需要检验 <code>root_</code> 是否为空进行不同的初始化操作.</p>
+<p><code>T value</code> 的使用需要 <code>std::make_shared&lt;T&gt;(std::move(value))</code> 但是只能使用一次, 所以需要新建一个局部变量 <code>new_value</code> 之后使用这个传入参数, 不然过不了 clang-tidy 的检查.</p>
+</div>
+        </div>
+    </div>
+<h3 id="remove">Remove</h3>
+<p>写完 Put 之后这个的实现就相对简单了, 对于能找到的路径的 <code>terminal_node</code> 修改为 <code>TrieNode</code>, 然后自底向上检查. 同时满足没有孩子和不是带值结点就删除, 否则停止. 最后对根结点做一次检验, 如果是空结点那么返回空树.</p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw" aria-hidden="true"></i>坑点<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><p>同样需要特殊处理 <code>root_</code>, 有为空和直接删除带值根结点两种情况.</p>
+<p>函数已经指定了返回类型, 所以返回空树时应当写 <code>return {};</code> 而不是 <code>return Trie();</code>. 这个也是 clang-tidy 要求.</p>
+</div>
+        </div>
+    </div>
+<h2 id="task-2---concurrent-key-value-store">Task #2 - Concurrent Key-Value Store</h2>
+<p>对 Task1 中的实现进行并行化, 使得可以同时有多个读者和一个写者同时访问Trie.</p>
+<p>学过操作系统的互斥和同步之后这个就很简单了, 注意临界区加锁就行, 不再赘述.</p>
+<h2 id="task-3---debugging">Task #3 - Debugging</h2>
+<p>这个 Task 主要是要求对 gdb 的掌握, 打断点查看内存信息, 因为涉及到动态指针, 所以只靠默认 Debugger 是无法满足要求的.</p>
+<p>我一开始找到内存后直接强制转换指针访问, 但是死活访问不上</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">(</span>gdb<span class="o">)</span> p *<span class="o">(</span>TrieNodeWithValue&lt;uint32_t&gt;*<span class="o">)</span>0x608000001130
+</span></span><span class="line"><span class="cl">No symbol <span class="s2">&#34;TrieNodeWithValue&lt;uint32_t&gt;&#34;</span> in current context.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>无奈之下为了做出这个 Task, 我在前面的 40 行设置条件断点 <code>key.compare(&quot;969&quot;)==0</code> 可以绕过后面的智能指针得到答案.( <del>不提倡</del> )</p>
+<p>但是这终究不是正解, 后面我在求助 ssg 和 crescentia 之后在 gdb 命令行中又重试了一遍, 发现</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">(</span>gdb<span class="o">)</span> p *<span class="o">(</span>TrieNode*<span class="o">)</span>0x608000001130
+</span></span><span class="line"><span class="cl"><span class="nv">$1</span> <span class="o">=</span> <span class="o">{</span>_vptr.TrieNode <span class="o">=</span> 0x5555557ce700 &lt;vtable <span class="k">for</span> bustub::TrieNodeWithValue&lt;unsigned int&gt;+16&gt;, <span class="nv">children_</span> <span class="o">=</span> std::map with <span class="m">0</span> elements, <span class="nv">is_value_node_</span> <span class="o">=</span> true<span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>原因竟是 <code>uint32_t</code> 会被宏替换为 <code>unsigned int</code>, 所以 gdb 中自然没有 <code>TrieNodeWithValue&lt;uint32_t&gt;</code> 这个类型. <strong>可恶, 好坑!</strong></p>
+<h2 id="task-4---sql-string-functions">Task #4 - SQL String Functions</h2>
+<p>这个 Task 就是对 SQL 字符串的文本处理了, 实现设计到 <code>std::transform</code> 的使用和函数的注册.</p>
+<h2 id="项目提交的坑点">项目提交的坑点</h2>
+<ol>
+<li>记得先运行 <code>gradescope_sign.py</code> 添加签名.</li>
+<li>注意代码格式问题, 我一开始不注重 <code>clang-tidy</code> 导致后面改了半天.</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>通过这次一天多的 Project 0, 使我第一次面对 modern cpp 的高级特性. 这就是 c++! 太难蚌了.</p></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
@@ -113,7 +218,7 @@
                             <a class="link-to-markdown" href="/cmu-15445-project-0/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://4ever-xxxl.github.io/cmu-15445-project-0/" data-title="CMU 15445 Project 0" data-hashtags="Project,CMU15445,Database"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://4ever-xxxl.github.io/cmu-15445-project-0/" data-hashtag="Project"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://4ever-xxxl.github.io/cmu-15445-project-0/" data-title="CMU 15445 Project 0"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://4ever-xxxl.github.io/cmu-15445-project-0/" data-title="CMU 15445 Project 0"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://4ever-xxxl.github.io/cmu-15445-project-0/" data-title="CMU 15445 Project 0"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://4ever-xxxl.github.io/cmu-15445-project-0/" data-title="CMU 15445(2023-fall) Project 0" data-hashtags="Project,CMU15445,Database"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://4ever-xxxl.github.io/cmu-15445-project-0/" data-hashtag="Project"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://4ever-xxxl.github.io/cmu-15445-project-0/" data-title="CMU 15445(2023-fall) Project 0"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://4ever-xxxl.github.io/cmu-15445-project-0/" data-title="CMU 15445(2023-fall) Project 0"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://4ever-xxxl.github.io/cmu-15445-project-0/" data-title="CMU 15445(2023-fall) Project 0"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
