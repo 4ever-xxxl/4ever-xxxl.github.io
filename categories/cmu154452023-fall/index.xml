@@ -1,10 +1,10 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>CMU15445 - 标签 - xxxl&#39;s Blog</title>
-        <link>https://4ever-xxxl.github.io/tags/cmu15445/</link>
-        <description>CMU15445 - 标签 - xxxl&#39;s Blog</description>
+        <title>CMU15445(2023-fall) - 分类 - xxxl&#39;s Blog</title>
+        <link>https://4ever-xxxl.github.io/categories/cmu154452023-fall/</link>
+        <description>CMU15445(2023-fall) - 分类 - xxxl&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>m1ca@cnss.io (m1ca)</managingEditor>
-            <webMaster>m1ca@cnss.io (m1ca)</webMaster><lastBuildDate>Sat, 27 Jan 2024 13:35:13 &#43;0800</lastBuildDate><atom:link href="https://4ever-xxxl.github.io/tags/cmu15445/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>m1ca@cnss.io (m1ca)</webMaster><lastBuildDate>Sat, 27 Jan 2024 13:35:13 &#43;0800</lastBuildDate><atom:link href="https://4ever-xxxl.github.io/categories/cmu154452023-fall/" rel="self" type="application/rss+xml" /><item>
     <title>CMU 15445 Project 1</title>
     <link>https://4ever-xxxl.github.io/cmu-15445-project-1/</link>
     <pubDate>Sat, 27 Jan 2024 13:35:13 &#43;0800</pubDate>

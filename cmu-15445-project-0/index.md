@@ -1,4 +1,4 @@
-# CMU 15445(2023-fall) Project 0
+# CMU 15445 Project 0
 
 
 <!--more-->

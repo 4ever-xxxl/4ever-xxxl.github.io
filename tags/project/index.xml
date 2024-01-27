@@ -4,8 +4,16 @@
         <link>https://4ever-xxxl.github.io/tags/project/</link>
         <description>Project - 标签 - xxxl&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>m1ca@cnss.io (m1ca)</managingEditor>
-            <webMaster>m1ca@cnss.io (m1ca)</webMaster><lastBuildDate>Sun, 14 Jan 2024 16:17:46 &#43;0800</lastBuildDate><atom:link href="https://4ever-xxxl.github.io/tags/project/" rel="self" type="application/rss+xml" /><item>
-    <title>CMU 15445(2023-fall) Project 0</title>
+            <webMaster>m1ca@cnss.io (m1ca)</webMaster><lastBuildDate>Sat, 27 Jan 2024 13:35:13 &#43;0800</lastBuildDate><atom:link href="https://4ever-xxxl.github.io/tags/project/" rel="self" type="application/rss+xml" /><item>
+    <title>CMU 15445 Project 1</title>
+    <link>https://4ever-xxxl.github.io/cmu-15445-project-1/</link>
+    <pubDate>Sat, 27 Jan 2024 13:35:13 &#43;0800</pubDate>
+    <author>m1ca</author>
+    <guid>https://4ever-xxxl.github.io/cmu-15445-project-1/</guid>
+    <description><![CDATA[摘要：CMU 15445 Project 1 的实现笔记和优化攻略.]]></description>
+</item>
+<item>
+    <title>CMU 15445 Project 0</title>
     <link>https://4ever-xxxl.github.io/cmu-15445-project-0/</link>
     <pubDate>Sun, 14 Jan 2024 16:17:46 &#43;0800</pubDate>
     <author>m1ca</author>
