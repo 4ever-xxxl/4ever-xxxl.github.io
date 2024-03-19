@@ -5,7 +5,7 @@
 
 ## Foreword
 
-这两天从~~清水河~~\)臭水河的 526 回到了连个服务器都得试几十次的老家, 感觉进度又慢了不少. 先放 LeaderBoard 结果吧, 截止 2024/02/05 排名第 3:
+这两天从~~清水河~~\)臭水河的 526 回到了连个服务器都得试 N 次的老家, 感觉进度又慢了不少. 先放 LeaderBoard 结果吧, 截止 2024/02/05 排名第 3:
 
 {{< figure src="./img/leaderboard.png" caption="`figure-1` LeaderBoard">}}
 
@@ -41,11 +41,11 @@ hash >> (HTABLE_HEADER_PAGE_METADATA_SIZE * 8 - max_depth_);
 
 directory 中 global_depth_, local_depth_ 的设计是整个 extendiblehash 的精髓. 通过这两个变量的设计, 可以实现动态的扩容和收缩.
 
-TODO
+global_depth_ 变化时记得对 bucket 进行复制或初始化操作.
 
 ### bucket
 
-TODO
+bucket 只作为存储和查找的容器, 实现比较简单. 只需要注意每个元素是唯一的, 插入前需要进行检查.
 
 ## Task #3 - Extendible Hashing Implementation
 
@@ -99,8 +99,10 @@ TEST(ExtendibleHTableTest, DebugTest) {
 ---
 这里简短地说一下并发的实现吧, 由于已经使用了 page_guard, 所以只需要保证 insert 和 remove 两个事务操作不对同一块操作打断就行. 目前看下来效果来看, 直接一把大锁反而是效果最好的, 如果细化 directory 的锁, 会提升 write 性能, 但是频繁地锁操作反而导致 read 性能大幅下降. 所以最终还是选择了大锁.
 
-事务区别 `Transaction *transaction` 并没有用上, 以后有空再补上这一块的优化吧.
+事务区别 `Transaction *transaction` 并没有用上, 以后有空再补上这一块吧.
 
 ## Conclusion
+
+后面看了之前 2023-Spring 的实验, 从 B+ 树到 Extendible Hashing 的难度确实下降了不少.
 
 这次 lab 最大的收获就是调试技术的提升, 尤其是对于不太方便内存挨个查看的过程. 然后便是对 `LOG_DEBUG` 的应用, 可以方便地帮我复现短过程的 gradescope 测试失败样例.

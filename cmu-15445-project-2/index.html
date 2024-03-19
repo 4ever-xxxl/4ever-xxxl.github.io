@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/4ever-xxxl.github.io\/cmu-15445-project-2\/"
-        },"image": ["https:\/\/4ever-xxxl.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Project, CMU15445, Database","wordcount":  1018 ,
+        },"image": ["https:\/\/4ever-xxxl.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Project, CMU15445, Database","wordcount":  1103 ,
         "url": "https:\/\/4ever-xxxl.github.io\/cmu-15445-project-2\/","datePublished": "2024-02-05T21:01:50+08:00","dateModified": "2024-02-05T21:01:50+08:00","publisher": {
             "@type": "Organization",
             "name": "m1ca","logo": "https:\/\/4ever-xxxl.github.io\/images\/avatar.png"},"author": {
@@ -83,7 +83,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">CMU 15445 Project 2</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/4ever-xxxl" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>m1ca</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/cmu154452023-fall/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>CMU15445(2023-fall)</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-02-05">2024-02-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1018 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-02-05">2024-02-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1103 字&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
@@ -111,7 +111,7 @@
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="foreword">Foreword</h2>
-<p>这两天从<del>清水河</del>)臭水河的 526 回到了连个服务器都得试几十次的老家, 感觉进度又慢了不少. 先放 LeaderBoard 结果吧, 截止 2024/02/05 排名第 3:</p>
+<p>这两天从<del>清水河</del>)臭水河的 526 回到了连个服务器都得试 N 次的老家, 感觉进度又慢了不少. 先放 LeaderBoard 结果吧, 截止 2024/02/05 排名第 3:</p>
 <figure><img src="./img/leaderboard.png"
          alt="figure-1 LeaderBoard"/><figcaption>
             <p><code>figure-1</code> LeaderBoard</p>
@@ -154,9 +154,9 @@
 </div>
 </div><h3 id="directory">directory</h3>
 <p>directory 中 global_depth_, local_depth_ 的设计是整个 extendiblehash 的精髓. 通过这两个变量的设计, 可以实现动态的扩容和收缩.</p>
-<p>TODO</p>
+<p>global_depth_ 变化时记得对 bucket 进行复制或初始化操作.</p>
 <h3 id="bucket">bucket</h3>
-<p>TODO</p>
+<p>bucket 只作为存储和查找的容器, 实现比较简单. 只需要注意每个元素是唯一的, 插入前需要进行检查.</p>
 <h2 id="task-3---extendible-hashing-implementation">Task #3 - Extendible Hashing Implementation</h2>
 <p>GetValue 和 不特殊处理的 Insert, Remove 都是直接调用对应的 page 的函数即可. 下面主要讲一下特殊处理的步骤.</p>
 <h3 id="insert">Insert</h3>
@@ -228,8 +228,9 @@
 </div>
 </div><hr>
 <p>这里简短地说一下并发的实现吧, 由于已经使用了 page_guard, 所以只需要保证 insert 和 remove 两个事务操作不对同一块操作打断就行. 目前看下来效果来看, 直接一把大锁反而是效果最好的, 如果细化 directory 的锁, 会提升 write 性能, 但是频繁地锁操作反而导致 read 性能大幅下降. 所以最终还是选择了大锁.</p>
-<p>事务区别 <code>Transaction *transaction</code> 并没有用上, 以后有空再补上这一块的优化吧.</p>
+<p>事务区别 <code>Transaction *transaction</code> 并没有用上, 以后有空再补上这一块吧.</p>
 <h2 id="conclusion">Conclusion</h2>
+<p>后面看了之前 2023-Spring 的实验, 从 B+ 树到 Extendible Hashing 的难度确实下降了不少.</p>
 <p>这次 lab 最大的收获就是调试技术的提升, 尤其是对于不太方便内存挨个查看的过程. 然后便是对 <code>LOG_DEBUG</code> 的应用, 可以方便地帮我复现短过程的 gradescope 测试失败样例.</p></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

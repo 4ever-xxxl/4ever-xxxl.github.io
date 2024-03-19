@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/4ever-xxxl.github.io\/cmu-15445-project3\/"
-        },"image": ["https:\/\/4ever-xxxl.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Project, CMU15445, Database","wordcount":  6 ,
+        },"image": ["https:\/\/4ever-xxxl.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Project, CMU15445, Database","wordcount":  140 ,
         "url": "https:\/\/4ever-xxxl.github.io\/cmu-15445-project3\/","datePublished": "2024-03-10T19:03:54+08:00","dateModified": "2024-03-10T19:03:54+08:00","publisher": {
             "@type": "Organization",
             "name": "m1ca","logo": "https:\/\/4ever-xxxl.github.io\/images\/avatar.png"},"author": {
@@ -83,15 +83,55 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">CMU 15445 Project3</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/4ever-xxxl" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>m1ca</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/cmu154452023-fall/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>CMU15445(2023-fall)</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-03-10">2024-03-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 6 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-03-10">2024-03-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 140 字&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
                     <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
                 </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
-            </div><div class="content" id="content"><p>先占个位置.</p></div><div class="post-footer" id="post-footer">
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#foreword">Foreword</a></li>
+    <li><a href="#task-1---access-method-executors">Task #1 - Access Method Executors</a></li>
+    <li><a href="#task-2---aggregation--join-executors">Task #2 - Aggregation &amp; Join Executors</a></li>
+    <li><a href="#task-3---hashjoin-executor-and-optimization">Task #3 - HashJoin Executor and Optimization</a></li>
+    <li><a href="#task-4-sort--limit-executors--window-functions--top-n-optimization">Task #4: Sort + Limit Executors + Window Functions + Top-N Optimization</a></li>
+    <li><a href="#leaderboard-optimization">Leaderboard Optimization</a>
+      <ul>
+        <li><a href="#q1">Q1</a></li>
+        <li><a href="#q2">Q2</a></li>
+        <li><a href="#q3">Q3</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="foreword">Foreword</h2>
+<p><del>过完年摆着摆着就开学了, 再不努力加进度就寄了.</del></p>
+<p>照例先放 Leader-Board, 截止 2024/02/28 排名第 2: (其中 Q1 和 Q3 都是单榜第一)</p>
+<figure><img src="./img/leaderboard.png"
+         alt="figure-1 LeaderBoard"/><figcaption>
+            <p><code>figure-1</code> LeaderBoard</p>
+        </figcaption>
+</figure>
+
+<p>在这一章我们从存储器和索引继续往上走, 进入了 SQL 的执行和优化环节. 建议反复看下面这张图理解整个流程:</p>
+<figure><img src="./img/project-structure.svg"
+         alt="figure-2 ProjectStructure"/><figcaption>
+            <p><code>figure-2</code> ProjectStructure</p>
+        </figcaption>
+</figure>
+
+<h2 id="task-1---access-method-executors">Task #1 - Access Method Executors</h2>
+<h2 id="task-2---aggregation--join-executors">Task #2 - Aggregation &amp; Join Executors</h2>
+<h2 id="task-3---hashjoin-executor-and-optimization">Task #3 - HashJoin Executor and Optimization</h2>
+<h2 id="task-4-sort--limit-executors--window-functions--top-n-optimization">Task #4: Sort + Limit Executors + Window Functions + Top-N Optimization</h2>
+<h2 id="leaderboard-optimization">Leaderboard Optimization</h2>
+<h3 id="q1">Q1</h3>
+<h3 id="q2">Q2</h3>
+<h3 id="q3">Q3</h3>
+<h2 id="conclusion">Conclusion</h2></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
