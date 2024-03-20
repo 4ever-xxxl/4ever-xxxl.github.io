@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>CMU 15445 Project 3 - xxxl&#39;s Blog</title><meta name="Description" content="摘要：CMU 15445 Project 3 的实现笔记和优化攻略."><meta property="og:title" content="CMU 15445 Project 3" />
+<meta property="og:description" content="摘要：CMU 15445 Project 3 的实现笔记和优化攻略." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://4ever-xxxl.github.io/cmu-15445-project-3/" /><meta property="og:image" content="https://4ever-xxxl.github.io/47"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-03-10T19:03:54+08:00" />
+<meta property="article:modified_time" content="2024-03-10T19:03:54+08:00" /><meta property="og:site_name" content="xxxl&#39;s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://4ever-xxxl.github.io/47"/>
+
+<meta name="twitter:title" content="CMU 15445 Project 3"/>
+<meta name="twitter:description" content="摘要：CMU 15445 Project 3 的实现笔记和优化攻略."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/image/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://4ever-xxxl.github.io/cmu-15445-project-3/" /><link rel="prev" href="https://4ever-xxxl.github.io/cmu-15445-project-2/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "CMU 15445 Project 3",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/4ever-xxxl.github.io\/cmu-15445-project-3\/"
+        },"image": ["https:\/\/4ever-xxxl.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Project, CMU15445, Database","wordcount":  1884 ,
+        "url": "https:\/\/4ever-xxxl.github.io\/cmu-15445-project-3\/","datePublished": "2024-03-10T19:03:54+08:00","dateModified": "2024-03-10T19:03:54+08:00","publisher": {
+            "@type": "Organization",
+            "name": "m1ca","logo": "https:\/\/4ever-xxxl.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "m1ca"
+            },"description": "摘要：CMU 15445 Project 3 的实现笔记和优化攻略."
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="xxxl&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/image/favicon.png"
+        data-srcset="/image/favicon.png, /image/favicon.png 1.5x, /image/favicon.png 2x"
+        data-sizes="auto"
+        alt="/image/favicon.png"
+        title="/image/favicon.png" />xxl</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about/" title="About"> About </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="xxxl&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/image/favicon.png"
+        data-srcset="/image/favicon.png, /image/favicon.png 1.5x, /image/favicon.png 2x"
+        data-sizes="auto"
+        alt="/image/favicon.png"
+        title="/image/favicon.png" />xxl</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about/" title="About">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">CMU 15445 Project 3</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/4ever-xxxl" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>m1ca</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/cmu154452023-fall/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>CMU15445(2023-fall)</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-03-10">2024-03-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1884 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#foreword">Foreword</a></li>
+    <li><a href="#task-1---access-method-executors">Task #1 - Access Method Executors</a>
+      <ul>
+        <li><a href="#seqscan">SeqScan</a></li>
+        <li><a href="#insert-delete--update">Insert, Delete ＆ Update</a></li>
+        <li><a href="#indexscan">IndexScan</a></li>
+        <li><a href="#seqscan---indexscan">SeqScan -&gt; IndexScan</a></li>
+      </ul>
+    </li>
+    <li><a href="#task-2---aggregation--join-executors">Task #2 - Aggregation &amp; Join Executors</a>
+      <ul>
+        <li><a href="#aggregation">Aggregation</a></li>
+        <li><a href="#nestedloopjoin">NestedLoopJoin</a></li>
+      </ul>
+    </li>
+    <li><a href="#task-3---hashjoin-executor-and-optimization">Task #3 - HashJoin Executor and Optimization</a>
+      <ul>
+        <li><a href="#hashjoin">HashJoin</a></li>
+        <li><a href="#nlj---hashjoin">NLJ -&gt; HashJoin</a></li>
+      </ul>
+    </li>
+    <li><a href="#task-4-sort--limit-executors--window-functions--top-n-optimization">Task #4: Sort + Limit Executors + Window Functions + Top-N Optimization</a>
+      <ul>
+        <li><a href="#sort--limit">Sort ＆ Limit</a></li>
+        <li><a href="#top-n">Top-N</a></li>
+        <li><a href="#sort--limit---top-n">Sort ＆ Limit -&gt; Top-N</a></li>
+        <li><a href="#window-functions">Window Functions</a></li>
+      </ul>
+    </li>
+    <li><a href="#leaderboard-optimization">Leaderboard Optimization</a>
+      <ul>
+        <li><a href="#q1-windowfunc---topnpergroup">Q1 WindowFunc -&gt; TopNPerGroup</a></li>
+        <li><a href="#q2-reorderjoin--predicatepushdown">Q2 ReorderJoin &amp; PredicatePushDown</a></li>
+        <li><a href="#q3-constantfolding--columnpruning">Q3 ConstantFolding &amp; ColumnPruning</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="foreword">Foreword</h2>
+<p><del>过完年摆着摆着就开学了, 再不努力加进度就寄了.</del></p>
+<p>照例先放 Leader-Board, 截止 2024/02/28 排名第 2: (其中 Q1 和 Q3 都是单榜第一)</p>
+<figure><img src="./img/leaderboard.png"
+         alt="figure-1 LeaderBoard"/><figcaption>
+            <p><code>figure-1</code> LeaderBoard</p>
+        </figcaption>
+</figure>
+
+<p>在这一章我们从存储器和索引继续往上走, 进入了 SQL 的执行和优化环节. 建议反复看下面这张图理解整个流程:</p>
+<figure><img src="./img/project-structure.svg"
+         alt="figure-2 ProjectStructure"/><figcaption>
+            <p><code>figure-2</code> ProjectStructure</p>
+        </figcaption>
+</figure>
+
+<p>这一章来说实现并不复杂 (好像也没有哪一关比较复杂的, 也许是已经被删掉的 B+ Tree), 主要的难点在于与前面两章完全解耦. 需要从头阅读源码, 理清 <code>Executor</code> <code>ExecutorContext</code> <code>PlanNode</code> 之间的关系, 以及如何与之前的实现联立的. 做这个项目时最好能自己画一下结构图便于理解.</p>
+<h2 id="task-1---access-method-executors">Task #1 - Access Method Executors</h2>
+<h3 id="seqscan">SeqScan</h3>
+<p>通过 <code>TableInfo</code> 拿到 <code>table_iter_</code> 来遍历表中的元组. 需要处理 <code>is_deleted_</code> 和 <code>filer</code> 两个条件.</p>
+<h3 id="insert-delete--update">Insert, Delete ＆ Update</h3>
+<p>这三个的处理逻辑类似, 都是通过 <code>PlanNode</code> 得到要操作的和新的 <code>tuple</code>, 然后调用 <code>table_</code> 中的函数来更新, 同时记得更新 <code>Index</code>.</p>
+<h3 id="indexscan">IndexScan</h3>
+<p>需要进行一次强制转换</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">HashTableIndexForTwoIntegerColumn</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">index_info_</span><span class="o">-&gt;</span><span class="n">index_</span><span class="p">.</span><span class="n">get</span><span class="p">())</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后调用函数遍历即可.</p>
+<h3 id="seqscan---indexscan">SeqScan -&gt; IndexScan</h3>
+<p>当 <code>SeqScan</code> 的 <code>Filter</code> 条件是形如 <code>#1 = const_value</code> 并且有包含 <code>#1</code> 列的索引时, 可以将其优化为 <code>IndexScan</code>.
+<figure><img src="./img/seq2index.png"
+         alt="figure-3 Seq -&amp;gt; Index"/><figcaption>
+            <p><code>figure-3</code> Seq -&gt; Index</p>
+        </figcaption>
+</figure>
+</p>
+<h2 id="task-2---aggregation--join-executors">Task #2 - Aggregation &amp; Join Executors</h2>
+<h3 id="aggregation">Aggregation</h3>
+<p>对 <code>GroupBys</code> 和 <code>Aggregates</code> 分别进行处理得到 key 和 value, 然后添加进 <code>HashTable</code> 中. 添加时需要根据 <code>AggregationType</code> 对表中的值进行更新. 如果没有进行分组, 那么添加完之后要再加入一个 <code>InitialAggregateValue</code> 来统计整个表的值.</p>
+<h3 id="nestedloopjoin">NestedLoopJoin</h3>
+<p>采用遍历的方法得到两个表的连接. 首先保存左表的所有元组, 然后遍历左表中的元组, 执行 <code>EvaluateJoin</code> 匹配右表中的元组, 如果匹配成功则输出新的元组, 如果没有且 <code>JoinType</code> 是 <code>LEFT</code> 则输出 将左表中的元组和通过 <code>GetNullValueByType</code> 得到的元组进行连接输出.</p>
+<h2 id="task-3---hashjoin-executor-and-optimization">Task #3 - HashJoin Executor and Optimization</h2>
+<h3 id="hashjoin">HashJoin</h3>
+<p>仿照 <code>NestedLoopJoin</code> 的实现, 构造自己的 <code>HashTable</code>. 需要实现的有 <code>HashJoinKey</code> 的类定义, 比较函数和 <code>Hash</code> 模板, 以及 <code>HashJoinValue</code> 的类定义.</p>
+<p>其中 <code>HashJoinKey</code> 保存的是元组中用于连接的列的值, <code>HashJoinValue</code> 保存的是元组的所有值.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">HashJoinKey</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">HashJoinValue</span><span class="o">&gt;&gt;</span> <span class="n">ht_</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在这里为了便于处理两种连接类型, 我选择将所有的右表的元组都存入 <code>HashTable</code> 中, 然后遍历左表的元组, 通过 <code>HashTable</code> 得到右表中的元组, 然后进行连接. 具体处理类似于 <code>NestedLoopJoin</code>.</p>
+<h3 id="nlj---hashjoin">NLJ -&gt; HashJoin</h3>
+<p>如果 <code>NestedLoopJoin</code> 的所有 <code>JoinPredicate</code> 都是 <code>#1 = #2</code> 的形式, 那么可以优化为 <code>HashJoin</code>.</p>
+<figure><img src="./img/nlj2hashjoin.png"
+         alt="figure-4 NLJ -&amp;gt; HashJoin"/><figcaption>
+            <p><code>figure-4</code> NLJ -&gt; HashJoin</p>
+        </figcaption>
+</figure>
+
+<p>具体处理时, 我们需要递归地遍历 <code>JoinPredicate</code> 的左右子树. 这里为了便于实现只处理了 <code>LogicExpression</code> 为 <code>AND</code> 的情况, 这种情况下递归调用左右子树. 如果 <code>expr</code> 是 <code> ComparisonExpression</code> 并且是 <code>#1 = #2</code> 的形式, 那么就可以将两边的列分发保存. 这里需要注意 <code>#1</code> 和 <code>#2</code> 的顺序.</p>
+<h2 id="task-4-sort--limit-executors--window-functions--top-n-optimization">Task #4: Sort + Limit Executors + Window Functions + Top-N Optimization</h2>
+<h3 id="sort--limit">Sort ＆ Limit</h3>
+<p>最简单的一集.</p>
+<h3 id="top-n">Top-N</h3>
+<p>堆排序取前 N 项即可, 既可以用优先队列, 也可以使用 <code>std::push_heap</code> 等来实现.</p>
+<h3 id="sort--limit---top-n">Sort ＆ Limit -&gt; Top-N</h3>
+<figure><img src="./img/sortlimit2topn.png"
+         alt="figure-5 Sort ＆ Limit -&amp;gt; TopN"/><figcaption>
+            <p><code>figure-5</code> Sort ＆ Limit -&gt; TopN</p>
+        </figcaption>
+</figure>
+
+<h3 id="window-functions">Window Functions</h3>
+<p>最难绷的一集, 感觉基础任务的所有难度都在这个点的繁琐上了.</p>
+<ul>
+<li>首先根据是否有 <code>order_by</code> 来进行排序.</li>
+<li>然后根据 <code>partition_by</code> 来分组. 这里扫一遍产生每个组的全局数据, 如果是 Rank 似乎需要单独写处理的逻辑.</li>
+<li>再扫一遍根据 <code>window_type</code> 来进行处理.</li>
+<li>收集所有的 <code>Value</code> 矩阵, 生成 <code>Tuple</code> 输出.</li>
+</ul>
+<p>真的很繁琐, 不是很喜欢这个任务, 感觉各个部分的细节都很奇怪.</p>
+<p>到这里就完成了所有的任务, 接下来就是优化了.</p>
+<hr>
+<h2 id="leaderboard-optimization">Leaderboard Optimization</h2>
+<h3 id="q1-windowfunc---topnpergroup">Q1 WindowFunc -&gt; TopNPerGroup</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">rank</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">rank</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">t1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">rank</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>主要优化部分如下:
+<figure><img src="./img/q1.png"
+         alt="figure-6 WindowFunc -&amp;gt; TopNPerGroup"/><figcaption>
+            <p><code>figure-6</code> WindowFunc -&gt; TopNPerGroup</p>
+        </figcaption>
+</figure>
+</p>
+<p>优化在于 <code>WindowFunc</code> 中的 <code>Rank</code> 函数在后续结点被清除, 那么只需要进行排序分组操作, 然后取前 N 项即可. 也就是针对这一小种情况, 将其优化为 <code>TopNPerGroup</code>.</p>
+<p>说实话我依然不是很喜欢这个和 <code>WindowFunc</code> 相关的任务, 感觉优化太刻意了, 自己写出来的优化几乎没有什么通用性.</p>
+<p>TopNPerGroup 的实现则是维护一个 <code>HashTable</code>, <code>key</code> 是 <code>partition_by</code> 的值, <code>value</code> 是一个保存元组所有值的 <code>vector</code> 的堆, 从而可以得到每个组的前 N 项.</p>
+<h3 id="q2-reorderjoin--predicatepushdown">Q2 ReorderJoin &amp; PredicatePushDown</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">t4</span><span class="p">,</span><span class="w"> </span><span class="n">t5</span><span class="p">,</span><span class="w"> </span><span class="n">t6</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="n">t4</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t5</span><span class="p">.</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="n">t5</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t6</span><span class="p">.</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="n">t4</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">1000000</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="n">t4</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1500000</span><span class="p">)</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="n">t6</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">100000</span><span class="p">)</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="n">t6</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">150000</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><figure><img src="./img/q2.png"
+         alt="figure-7 ReorderJoin &amp;amp; PredicatePushDown"/><figcaption>
+            <p><code>figure-7</code> ReorderJoin &amp; PredicatePushDown</p>
+        </figcaption>
+</figure>
+
+<p>首先是 <code>ReorderJoin</code>. 递归的计算 <code>NLJ</code> 两侧表的总大小:</p>
+<ul>
+<li>Scan 结点通过 <code>EstimatedCardinality</code> 估算表的大小.</li>
+<li>NLJ 结点则计算两者之和</li>
+<li>Values, Limit, TopN 结点的大小为限制大小</li>
+<li>其余结点的大小为子结点的大小</li>
+</ul>
+<p>然后根据大小进行排序, 从而得到最优的连接顺序. 记得递归分发 <code>JoinPredicate</code> 中的条件.</p>
+<hr>
+<p>然后是 <code>PredicatePushDown</code>. 将 <code>Filter</code> 条件尽量下推到靠近源点, 从而减少中间计算量. 这里主要处理 <code>NLJ</code> 的情况.</p>
+<ul>
+<li>递归处理 <code>NLJ</code> 的 <code>predicate_</code> 树, 要求必须是 <code>AND</code> 结构. 对于形如 <code>#1.x = #2.x</code> 的条件保留, 其余条件下推到左右子树. 通过 <code>And</code> 逻辑拼接.</li>
+<li>得到新的 <code>predicate_</code> 之后, 将各自的 <code>Filter</code> 条件与子结点合并. 如果子结点是 <code>NLJ</code> 则需要使用 <code>RewriteExpressionForJoin</code> 来重写条件; 否则新建一个 <code>Filter</code> 结点.</li>
+</ul>
+<h3 id="q3-constantfolding--columnpruning">Q3 ConstantFolding &amp; ColumnPruning</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">d1</span><span class="p">,</span><span class="w"> </span><span class="n">d2</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">         </span><span class="k">MAX</span><span class="p">(</span><span class="n">v1</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">d1</span><span class="p">,</span><span class="w"> </span><span class="k">MIN</span><span class="p">(</span><span class="n">v1</span><span class="p">),</span><span class="w"> </span><span class="k">MAX</span><span class="p">(</span><span class="n">v2</span><span class="p">),</span><span class="w"> </span><span class="k">MIN</span><span class="p">(</span><span class="n">v2</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">         </span><span class="k">MAX</span><span class="p">(</span><span class="n">v1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">MIN</span><span class="p">(</span><span class="n">v1</span><span class="p">),</span><span class="w"> </span><span class="k">MAX</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">MIN</span><span class="p">(</span><span class="n">v2</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">         </span><span class="k">MAX</span><span class="p">(</span><span class="n">v1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">MAX</span><span class="p">(</span><span class="n">v1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">MAX</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">d2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">t7</span><span class="w"> </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">v4</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">t8</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">v4</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">v</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><figure><img src="./img/q3.png"
+         alt="figure-8 ConstantFolding &amp;amp; ColumnPruning"/><figcaption>
+            <p><code>figure-8</code> ConstantFolding &amp; ColumnPruning</p>
+        </figcaption>
+</figure>
+
+<p>首先是 <code>ConstantFolding</code>. 递归处理 <code>Expression</code> 树, 将所有的常量表达式计算出来, 然后替换原来的表达式. 如果得到最后的值是常量</p>
+<ul>
+<li>若为真, 则用子结点替换;</li>
+<li>若为假, 则替换为空的 <code>Value</code> 结点.</li>
+</ul>
+<p>此时还可以对 <code>Join</code> 优化, 如果右表是空的, 则直接返回左表.</p>
+<p>然后是 <code>ColumnPruning</code>. 对于 <code>Projection</code> 结点, 分别处理子结点为 <code>Projection</code> 和 <code>Aggregation</code> 的情况.</p>
+<ul>
+<li>对于 <code>Projection</code> 结点, 用父节点对子结点修剪, 然后用子结点替换父节点.</li>
+<li>对于 <code>Aggregation</code> 结点, 用 <code>Projection</code> 中出现的列检查 <code>Aggregation</code> 中是否出现, 若没有则删除. 同时检查是否存在冗余, 若存在则删除.</li>
+</ul>
+<p>(以上的删除均指重写相关部分得到新结点再替换, 而不是直接操作原结点.)</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>收获很大喵~, 最大的收获应该是初步了解了优化过程, 同时锻炼了自己阅读源码的能力.</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-03-10</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/cmu-15445-project-3/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://4ever-xxxl.github.io/cmu-15445-project-3/" data-title="CMU 15445 Project 3" data-hashtags="Project,CMU15445,Database"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://4ever-xxxl.github.io/cmu-15445-project-3/" data-hashtag="Project"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://4ever-xxxl.github.io/cmu-15445-project-3/" data-title="CMU 15445 Project 3"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://4ever-xxxl.github.io/cmu-15445-project-3/" data-title="CMU 15445 Project 3"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://4ever-xxxl.github.io/cmu-15445-project-3/" data-title="CMU 15445 Project 3"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/project/">Project</a>,&nbsp;<a href="/tags/cmu15445/">CMU15445</a>,&nbsp;<a href="/tags/database/">Database</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/cmu-15445-project-2/" class="prev" rel="prev" title="CMU 15445 Project 2"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>CMU 15445 Project 2</a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.117.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/4ever-xxxl" target="_blank">m1ca</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"giscus":{"category":"Announcements","categoryId":"DIC_kwDOKFj8TM4CYhAR","darkTheme":"dark","emitMetadata":"0","inputPosition":"bottom","lang":"zh-CN","lazyLoading":false,"lightTheme":"light","mapping":"pathname","reactionsEnabled":"1","repo":"4ever-xxxl/4ever-xxxl.github.io","repoId":"R_kgDOKFj8TA"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
