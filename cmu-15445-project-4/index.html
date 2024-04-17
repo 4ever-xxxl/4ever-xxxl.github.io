@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/4ever-xxxl.github.io\/cmu-15445-project-4\/"
-        },"image": ["https:\/\/4ever-xxxl.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Project, CMU15445, Database","wordcount":  1007 ,
+        },"image": ["https:\/\/4ever-xxxl.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Project, CMU15445, Database","wordcount":  1691 ,
         "url": "https:\/\/4ever-xxxl.github.io\/cmu-15445-project-4\/","datePublished": "2024-03-10T19:04:00+08:00","dateModified": "2024-03-10T19:04:00+08:00","publisher": {
             "@type": "Organization",
             "name": "m1ca","logo": "https:\/\/4ever-xxxl.github.io\/images\/avatar.png"},"author": {
@@ -83,8 +83,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">CMU 15445 Project4</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/4ever-xxxl" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>m1ca</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/cmu154452023-fall/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>CMU15445(2023-fall)</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-03-10">2024-03-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1007 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-03-10">2024-03-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1691 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -104,11 +104,17 @@
       <ul>
         <li><a href="#insert-executor">Insert Executor</a></li>
         <li><a href="#commit">Commit</a></li>
-        <li><a href="#update--delete-executor">Update &amp;&amp; Delete Executor</a></li>
+        <li><a href="#update--delete-executor">Update &amp; Delete Executor</a></li>
         <li><a href="#garbage-collection">Garbage Collection</a></li>
       </ul>
     </li>
-    <li><a href="#task-4---primary-key-index">Task #4 - Primary Key Index</a></li>
+    <li><a href="#task-4---primary-key-index">Task #4 - Primary Key Index</a>
+      <ul>
+        <li><a href="#index-scan">Index Scan</a></li>
+        <li><a href="#insert-delete--update">Insert, Delete &amp; Update</a></li>
+        <li><a href="#concurrent">Concurrent</a></li>
+      </ul>
+    </li>
     <li><a href="#bonus-task-1-abort">Bonus Task 1: Abort</a></li>
     <li><a href="#bonus-task-2---serializable-verification">Bonus Task #2 - Serializable Verification</a></li>
     <li><a href="#leaderboard">Leaderboard</a></li>
@@ -155,7 +161,7 @@
 <p>这里码量很小, 按照要求即可, 更新元组时间戳, 加入到 <code>write_set</code> 中.</p>
 <h3 id="commit">Commit</h3>
 <p>提交事务时, 需要先获取新的 <code>commit_ts_</code>, 遍历 <code>write_set</code>, 将元组的时间戳更新为事务的提交时间戳, 最后提交.</p>
-<h3 id="update--delete-executor">Update &amp;&amp; Delete Executor</h3>
+<h3 id="update--delete-executor">Update &amp; Delete Executor</h3>
 <p>首先是 <code>Write-Writes Conflict</code>, 如果元组的时间戳大于事务读取时间戳且不等于事务时间戳, 则说明已被其他事务修改过. 这里发生了一个写写冲突, 需要将事务标记为 <code>Tainted</code>, 然后抛出一个异常.</p>
 <p>若未发生写写冲突, 进入更新逻辑, 这俩处理类似, 都是更新数据 + 更新 <code>undo_log</code>, 为了便于后面的 <code>GC</code>, 我们这里需要将是否已被当前事务修改过分别处理.
 根据元组的时间戳和当前事务时间戳判断是否已被修改过:</p>
@@ -168,13 +174,42 @@
 <p>这里可能的做法和写法还是有挺多的, 仅介绍个人做法.</p>
 <p>遍历每一个元组的 <code>version_link</code>, 维护一个 <code>std::unordered_map&lt;txn_id_t, uint32_t&gt; garbage_cnt</code> 来记录每个事务可撤销的 <code>undo_log</code> 数量. 需要特殊处理仅有一个版本且小于水印的情况.</p>
 <p>然后遍历 <code>txn_map_</code>, 如果事务已提交或已中止, 判断事务的 <code>undo_log</code> 数量是否和可以撤销的数量相等, 若相等则可以回收该事务的 <code>undo_log</code>.</p>
-<p>// UNFINISHED</p>
-<hr>
 <h2 id="task-4---primary-key-index">Task #4 - Primary Key Index</h2>
+<h3 id="index-scan">Index Scan</h3>
+<p>与 <code>SeqScan</code> 类似.</p>
+<h3 id="insert-delete--update">Insert, Delete &amp; Update</h3>
+<p>由于我 <code>git</code> 是按 <code>task</code> 提交的, 所以这里的重构我直接按照加入更新主键后的逻辑来说了.</p>
+<p><strong>Insert</strong> 如果存在 <code>primary_index</code>, 先对表进行 <code>ScanKey</code>:</p>
+<ul>
+<li>如果不存在主键或查找后不存在元组则直接进行之前的插入逻辑;</li>
+<li>否则需要检查是否仅有一个且被标记删除, 若是则使用更新逻辑, 否则抛出异常.</li>
+</ul>
+<p><strong>Delete</strong> 逻辑较为简单, 直接标记删除即可.</p>
+<p><strong>Update</strong> 首先在 <code>Init</code> 阶段做检查, 是否对主键作了更新, 若是则需要将更新逻辑拆分为删除 + 插入.</p>
+<h3 id="concurrent">Concurrent</h3>
+<p>这一部分使用 <code>in_progress_</code> 来获取对元组的锁, 具体逻辑如下:</p>
+<ol>
+<li>检查写写冲突, 若发生则抛出异常.</li>
+<li>原子自旋, 不断读取 <code>old_version_link</code> 直到 <code>in_progress_</code> 为 <code>false</code>.</li>
+<li>带检查修改, 若成功则成功获取锁, 否则转 1.</li>
+<li>再次检查写写冲突, 执行后续操作, 最后释放锁.</li>
+</ol>
 <h2 id="bonus-task-1-abort">Bonus Task 1: Abort</h2>
+<p>又双叒叕要重构, 有点难绷的.</p>
+<p>使用的第二种实现方法. 对于已经设置 <code>tainted</code> 的事务, 需要在 <code>Abort</code> 时将其 <code>write_set</code> 中的元组恢复, 依然是使用 <code>undolog</code> 的逻辑. 同时将之前的修改获取 <code>in_progress_</code> 锁的逻辑换成获取表的锁 (显然这样锁的粒度变大了, 效率降低了不少).</p>
+<p>需要注意的是之前获取锁的逻辑可能会有 <code>txn_map_mutex_</code> 和 表锁的冲突, 可能需要调整加锁顺序.</p>
 <h2 id="bonus-task-2---serializable-verification">Bonus Task #2 - Serializable Verification</h2>
+<p>在 <code>seqscan</code> 和 <code>indexscan</code> 中 统计 <code>ScanPredicate</code> 获取事务读取的元组.</p>
+<p>在事务提交时进行序列化检查:</p>
+<ol>
+<li>遍历 <code>txn_map_</code>, 找到所有在 <code>txn</code> 之后开始但是先提交的事务</li>
+<li>获取它们的修改元组集合, 恢复出元组, 然后开始检查是否和当前事务读取的元组有交集, 若有则返回 <code>false</code> 转中止事务逻辑.</li>
+</ol>
 <h2 id="leaderboard">Leaderboard</h2>
-<h2 id="conclusion">Conclusion</h2></div><div class="post-footer" id="post-footer">
+<p>抽空看了一下论文但是没有啥明确的思路, 加上最近比较忙就搁置了, 以后有时间再看看吧.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>这一章的 <code>MVCC</code> 还是让我学到了很多的, 尤其是并发的处理和 <code>Debug</code>, 真的很难调试, 容易让人红温. 整个 <code>Bustub</code> 到这里也就结束了, 算是激发了我对 <code>Database</code> 的浓厚兴趣, 也不知研究生阶段会不会继续深入这个领域. <del>没书读了, 给个学上吧.</del></p>
+<p>最后, 感谢 <code>CMU 15445</code> 的老师和助教们的辛勤付出.</p></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
